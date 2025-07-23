@@ -2,6 +2,7 @@ import React from 'react';
 
 const CollapsibleContext = React.createContext({ open: false, onOpenChange: (open: boolean) => {} });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Collapsible: React.FC<{
     children: React.ReactNode;
     open: boolean;
