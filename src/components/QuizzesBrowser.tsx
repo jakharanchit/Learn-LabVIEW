@@ -3,7 +3,7 @@ import type { StandaloneQuiz } from '../types';
 import { Card } from './ui/Card';
 import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
-//import { HelpCircle, Clock, Percent, Hash, PlayCircle } from 'lucide-react';
+import { Hash, Clock, Percent, PlayCircle } from 'lucide-react';
 
 interface QuizzesBrowserProps {
   quizzes: StandaloneQuiz[];
