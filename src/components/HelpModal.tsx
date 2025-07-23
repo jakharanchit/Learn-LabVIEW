@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from './ui/Button';
-import { Card } from './ui/Card';
+//import { Card } from './ui/Card';
 import { X, Library, LayoutGrid, Brain, BarChart3 } from 'lucide-react';
 
 interface HelpModalProps {
