@@ -1,0 +1,6 @@
+{
+  "name": "LabVIEW Interactive Learning Hub",
+  "description": "A web application to help users learn the fundamentals of LabVIEW through dynamic lessons, visual examples, and interactive quizzes.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
