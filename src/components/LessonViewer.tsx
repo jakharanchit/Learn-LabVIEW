@@ -18,16 +18,12 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({ lesson, onComplete, 
     
     return (
         <div className="max-w-4xl mx-auto p-6 md:p-8 space-y-8 animate-fade-in">
-            <header>
-                <h1 className="text-4xl font-extrabold tracking-tight text-text-primary mb-2">{lesson.title}</h1>
-                 {isCompleted && (
-                    <div className="flex items-center gap-2 text-text-success font-medium">
-                        <CheckCircle2 className="h-5 w-5" />
-                        <span>Lesson Completed!</span>
-                    </div>
-                )}
-            </header>
-            
+            {isCompleted && (
+                <div className="flex items-center gap-2 text-text-success font-medium mb-2">
+                    <CheckCircle2 className="h-5 w-5" />
+                    <span>Lesson Completed!</span>
+                </div>
+            )}
             <Card>
                 <Card.Content>
                     <div className="prose dark:prose-invert max-w-none">

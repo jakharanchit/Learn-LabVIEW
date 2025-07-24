@@ -1,0 +1,481 @@
+---
+id: m2-arrays-clusters
+title: Arrays & Clusters
+description: Master LabVIEW's composite data types - learn to create, manipulate, and use arrays and clusters for organizing and processing multiple data values efficiently.
+category: Data Types & Wiring
+difficulty: intermediate
+estimatedTime: 22
+quiz:
+  - question: What is the main difference between arrays and clusters?
+    options:
+      - Arrays hold multiple data types, clusters hold one type
+      - Arrays hold one data type, clusters can hold multiple types
+      - Arrays are faster than clusters
+      - There is no difference
+    answer: Arrays hold one data type, clusters can hold multiple types
+  - question: What does auto-indexing do in a For Loop?
+    options:
+      - Automatically counts iterations
+      - Automatically builds arrays from loop data
+      - Automatically stops the loop
+      - Automatically indexes into arrays
+    answer: Automatically builds arrays from loop data
+---
+
+# Arrays & Clusters
+
+Arrays and clusters are LabVIEW's composite data types that allow you to group multiple values together. Understanding these data structures is essential for handling collections of data efficiently and building sophisticated applications.
+
+## Prerequisites
+
+- Understanding of basic LabVIEW data types
+- Knowledge of For Loops and While Loops
+- Familiarity with wiring and terminals
+
+## Learning Objectives
+
+By the end of this lesson, you will:
+- Understand the difference between arrays and clusters
+- Create and manipulate arrays using various methods
+- Use auto-indexing with loops effectively
+- Build and unbundle clusters for data organization
+- Apply array and cluster functions in practical applications
+- Handle multidimensional arrays and nested structures
+
+## Arrays: Collections of Similar Data
+
+**Arrays** are ordered collections of elements that all have the same data type. Think of them as lists or tables of related values.
+
+### Array Characteristics
+
+- **Homogeneous**: All elements must be the same data type
+- **Indexed**: Elements accessed by numerical index (0-based)
+- **Dynamic**: Size can change during execution
+- **Multidimensional**: Support 1D, 2D, 3D, etc.
+
+### Creating Array Controls and Indicators
+
+**Method 1: From Controls Palette**
+1. Modern → Array, Matrix & Cluster → Array
+2. Drop the array shell on front panel
+3. Drag a data type control into the array
+4. The array adopts that data type
+
+**Method 2: Auto-Indexing**
+- Enable auto-indexing on loop output tunnels
+- Arrays built automatically as loops execute
+
+### Array Display and Navigation
+
+**Array Elements:**
+```
+Index:    [0] [1] [2] [3] [4] ...
+Values:   [5] [3] [7] [1] [9] ...
+```
+
+**Array Controls:**
+- **Index display**: Shows/sets starting index
+- **Scrollbar**: Navigate through large arrays
+- **Element selector**: Choose how many elements to display
+- **Resize**: Drag corners to show more elements
+
+### Auto-Indexing: Automatic Array Building
+
+Auto-indexing is a powerful feature that automatically builds arrays from loop outputs.
+
+**For Loop with Auto-Indexing:**
+```vhdl
+For Loop (Count = 5):
+  Random Number (0-1) → Auto-indexing output tunnel
+  
+Result: Array of 5 random numbers
+```
+
+**Enabling/Disabling Auto-Indexing:**
+- Right-click on tunnel
+- Select "Enable Indexing" or "Disable Indexing"
+- **For Loops**: Auto-indexing enabled by default
+- **While Loops**: Auto-indexing disabled by default
+
+**Auto-Indexing Input (For Loops):**
+```vhdl
+Input Array → Auto-indexing input tunnel → For Loop
+- Loop automatically sizes to array length
+- Each iteration processes one array element
+```
+
+### Essential Array Functions
+
+#### Array Size
+Returns the number of elements in each dimension:
+```vhdl
+1D Array → Array Size → Number of elements
+2D Array → Array Size → [Rows, Columns] array
+```
+
+#### Index Array
+Extracts specific elements or subarrays:
+```vhdl
+// Get single element
+Array + Index → Index Array → Element
+
+// Get row from 2D array  
+2D Array + Row Index → Index Array → 1D Row Array
+
+// Get column from 2D array
+2D Array + (unwired, Column Index) → Index Array → 1D Column Array
+```
+
+#### Array Subset
+Extracts a portion of an array:
+```vhdl
+Array + Starting Index + Length → Array Subset → Subarray
+```
+
+#### Build Array
+Combines arrays and elements:
+```vhdl
+// Concatenate arrays
+Array 1 + Array 2 → Build Array → Combined Array
+
+// Add elements
+Array + New Element → Build Array → Expanded Array
+```
+
+#### Initialize Array
+Creates arrays with specified size and default values:
+```vhdl
+Element + Dimensions → Initialize Array → New Array
+```
+
+### Multidimensional Arrays
+
+**2D Arrays (Tables):**
+- Rows and columns of data
+- Common for image data, matrices, tables
+
+**Array Indexing:**
+```vhdl
+2D Array[row][column] = element
+3D Array[page][row][column] = element
+```
+
+**Building 2D Arrays:**
+```vhdl
+Method 1: Nested loops
+Outer For Loop (rows):
+  Inner For Loop (columns):
+    Calculate Element → Auto-indexing
+  Row Array → Auto-indexing
+Result: 2D Array
+
+Method 2: Build Array from 1D arrays
+1D Array 1 → Build Array → 2D Array
+1D Array 2 → Build Array (append)
+```
+
+## Clusters: Collections of Mixed Data
+
+**Clusters** are ordered collections that can contain different data types. They're like records or structures in other programming languages.
+
+### Cluster Characteristics
+
+- **Heterogeneous**: Can mix different data types
+- **Ordered**: Elements have fixed positions
+- **Fixed Size**: Number of elements set at edit time
+- **Named Elements**: Elements can have labels
+
+### Creating Cluster Controls
+
+**Method 1: Empty Cluster**
+1. Modern → Array, Matrix & Cluster → Cluster
+2. Drag controls into cluster shell
+3. Arrange and label elements
+
+**Method 2: Bundle Function**
+- Wire different data types to Bundle function
+- Creates cluster from individual elements
+
+### Common Cluster Applications
+
+**Error Clusters:**
+```
+Error Cluster:
+├─ Status (Boolean) - TRUE if error occurred
+├─ Code (I32) - Error code number  
+└─ Source (String) - Description of error source
+```
+
+**Coordinate Clusters:**
+```
+Point Cluster:
+├─ X (DBL) - Horizontal position
+└─ Y (DBL) - Vertical position
+```
+
+**Configuration Clusters:**
+```
+Settings Cluster:
+├─ Sample Rate (DBL)
+├─ Number of Samples (I32)
+├─ Auto Save (Boolean)
+└─ File Path (String)
+```
+
+### Cluster Functions
+
+#### Bundle/Unbundle
+**Bundle**: Creates clusters from individual elements
+```vhdl
+X Value + Y Value + Z Value → Bundle → XYZ Cluster
+```
+
+**Unbundle**: Extracts individual elements from clusters
+```vhdl
+XYZ Cluster → Unbundle → X Value, Y Value, Z Value
+```
+
+#### Bundle By Name/Unbundle By Name
+Works with named cluster elements:
+```vhdl
+// Update one element
+Original Cluster + New Value → Bundle By Name → Updated Cluster
+
+// Extract specific elements  
+Cluster → Unbundle By Name → Named Elements
+```
+
+#### Cluster Order
+- Elements accessed by position (0, 1, 2, ...)
+- Use View → Cluster Order to see/modify order
+- Important for Bundle/Unbundle functions
+
+## Practical Applications
+
+### Application 1: Data Logger with Statistics
+
+```vhdl
+Front Panel:
+- Temperature Array (numeric array indicator)
+- Statistics Cluster (cluster indicator):
+  ├─ Average (DBL)
+  ├─ Maximum (DBL) 
+  ├─ Minimum (DBL)
+  └─ Count (I32)
+
+Block Diagram:
+While Loop:
+  // Collect data
+  Read Temperature → Auto-indexing array
+  
+  // Calculate statistics
+  Temperature Array → Array Max/Min → Max, Min
+  Temperature Array → Mean → Average  
+  Temperature Array → Array Size → Count
+  
+  // Bundle statistics
+  Average + Max + Min + Count → Bundle → Statistics
+```
+
+### Application 2: Multi-Channel Data Acquisition
+
+```vhdl
+Configuration Setup:
+Channel Config Cluster:
+├─ Channel Name (String)
+├─ Sample Rate (DBL)
+├─ Range Min (DBL)
+└─ Range Max (DBL)
+
+Channel Array: Array of Channel Config Clusters
+
+Data Collection:
+For Loop (auto-sized by Channel Array):
+  Index Array → Current Channel Config
+  Unbundle → Name, Rate, Min, Max
+  Configure DAQ with settings
+  Acquire Data → Auto-indexing array
+  
+Result: 2D Array [Channel][Sample]
+```
+
+### Application 3: Waveform Processing
+
+```vhdl
+Waveform Cluster:
+├─ T0 (DBL) - Start time
+├─ dT (DBL) - Time step  
+└─ Data (DBL Array) - Y values
+
+Processing Chain:
+Input Waveform → Unbundle → T0, dT, Data
+Data → Signal Processing → Filtered Data
+T0 + dT + Filtered Data → Bundle → Output Waveform
+```
+
+## Advanced Array Techniques
+
+### Array Polymorphism
+
+Many functions work with arrays of different dimensions:
+```vhdl
+// Add works with:
+Scalar + Scalar = Scalar
+Scalar + Array = Array (scalar added to each element)
+Array + Array = Array (element-wise addition)
+```
+
+### Array Memory Management
+
+**Efficient Practices:**
+- Pre-allocate arrays when size is known
+- Use shift registers for growing arrays
+- Avoid unnecessary array copying
+
+**Example: Efficient Array Building**
+```vhdl
+Initialize Array (size=1000) → Shift Register
+
+While Loop:
+  Previous Array → Replace Array Element → Updated Array
+  Index counter → Shift Register
+  
+// Much faster than Build Array for large datasets
+```
+
+### Searching and Sorting
+
+**Search 1D Array:**
+```vhdl
+Array + Search Value → Search 1D Array → Index (or -1 if not found)
+```
+
+**Sort 1D Array:**
+```vhdl
+Array → Sort 1D Array → Sorted Array
+```
+
+## Performance Considerations
+
+### Array Performance Tips
+
+**Fast Operations:**
+- Index Array (direct access)
+- Array Subset (view into array)
+- Replace Array Element (in-place)
+
+**Slow Operations:**  
+- Build Array (creates new array)
+- Insert/Delete from middle
+- Frequent resizing
+
+### Memory Usage
+
+**1D Array:** Elements × Element Size
+**2D Array:** Rows × Columns × Element Size
+**Example:** 1000×1000 DBL array = 8 MB
+
+## Common Mistakes and Solutions
+
+### Mistake 1: Wrong Auto-Indexing
+
+❌ **Problem:**
+```vhdl
+While Loop:
+  Data → Auto-indexing tunnel (disabled by default)
+// Result: Only last value, not array
+```
+
+✅ **Solution:**
+```vhdl
+While Loop:
+  Data → Enable auto-indexing tunnel
+// Result: Array of all values
+```
+
+### Mistake 2: Array Bounds Errors
+
+❌ **Problem:**
+```vhdl
+Array Size = 5
+Index Array with Index = 7
+// Error: Index out of bounds
+```
+
+✅ **Solution:**
+```vhdl
+Array Size → Size
+Index → Clip (0, Size-1) → Safe Index
+```
+
+### Mistake 3: Cluster Order Confusion
+
+❌ **Problem:**
+```vhdl
+Bundle: A, B, C → Cluster
+Unbundle: Cluster → X, Y, Z
+// X=A, Y=B, Z=C (order dependent)
+```
+
+✅ **Solution:**
+```vhdl
+Use Bundle By Name/Unbundle By Name for clarity
+```
+
+## Practice Exercises
+
+### Exercise 1: Array Statistics Calculator
+
+Build a VI that:
+- Accepts an array of numbers
+- Calculates mean, standard deviation, min, max
+- Returns results in a statistics cluster
+- Handles empty arrays gracefully
+
+### Exercise 2: Data Filter
+
+Create a VI that:
+- Takes a noisy signal array
+- Applies moving average filter
+- Returns filtered array
+- Shows before/after comparison
+
+### Exercise 3: Multi-Channel Logger
+
+Design a system that:
+- Configures multiple data channels
+- Logs data to 2D array
+- Exports data with timestamps
+- Handles different sample rates per channel
+
+## Summary
+
+**Arrays:**
+- **Homogeneous collections** of same data type
+- **Indexed access** (0-based) for element retrieval
+- **Auto-indexing** builds arrays automatically from loops
+- **Multidimensional support** for complex data structures
+- **Rich function library** for manipulation and analysis
+
+**Clusters:**
+- **Heterogeneous collections** of mixed data types  
+- **Ordered elements** with fixed positions
+- **Bundle/Unbundle** for data assembly/extraction
+- **Named access** with Bundle/Unbundle By Name
+- **Perfect for** configuration data and error handling
+
+**Key Functions:**
+- Array Size, Index Array, Array Subset, Build Array
+- Bundle, Unbundle, Bundle By Name, Unbundle By Name
+- Initialize Array, Search Array, Sort Array
+
+**Best Practices:**
+- Use arrays for similar data, clusters for grouped data
+- Enable auto-indexing for automatic array building
+- Pre-allocate arrays when size is known
+- Use named cluster elements for clarity
+- Consider memory usage with large arrays
+
+Arrays and clusters are fundamental to professional LabVIEW development. Master these concepts, and you'll be able to handle complex data structures with confidence and efficiency.
+
+---

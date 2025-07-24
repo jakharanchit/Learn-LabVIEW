@@ -1,0 +1,234 @@
+---
+id: m3-modular-vis
+title: Icons, Connectors & Modular VIs
+description: Learn to create professional, reusable LabVIEW subVIs with custom icons, connectors, and documentation for scalable applications.
+category: Modular VIs & Debug
+difficulty: intermediate
+estimatedTime: 15
+quiz:
+  - question: What is the maximum number of terminals allowed on a LabVIEW connector pane?
+    options:
+      - 12
+      - 28
+      - 32
+      - 64
+    answer: 28
+  - question: Which connector pane pattern is recommended for general-purpose subVIs?
+    options:
+      - 4x2x2x4
+      - 5x3x3x5
+      - 4x2x2x4 or 5x3x3x5 depending on I/O count
+      - Any pattern as long as it has 8 terminals
+    answer: 4x2x2x4 or 5x3x3x5 depending on I/O count
+---
+
+# Icons, Connectors & Modular VIs
+
+Create reusable LabVIEW code by mastering subVI architecture: professional icons, proper connector panes, clear documentation, and strict modularity.
+
+## Learning Objectives
+
+After completing this lesson, you will be able to:
+- Design clear and intuitive custom icons
+- Select appropriate connector pane patterns
+- Assign terminals for flexibility and readability
+- Implement error clusters for robust subVIs
+- Document VIs using descriptions and tip strips
+- Apply modular programming best practices
+
+---
+
+## Why Modular VIs Matter
+
+**Benefits:**
+- **Reuse:** Save development time by reusing common functions
+- **Readability:** Simplify complex block diagrams
+- **Maintainability:** Isolate bugs and update code easily
+- **Scalability:** Build large applications systematically
+
+> 📝 **Best Practice**  
+> One VI should accomplish **one logical task**. Keep it short and focused.
+
+## Custom Icons
+
+Icons represent VIs on block diagrams. A clear icon communicates function instantly.
+
+### Icon Editor Basics
+
+1. Open VI → Right-click icon pane → **Edit Icon**
+2. Icon Editor window appears with:
+   - **Layers:** Segregate icon elements
+   - **Tools:** Rectangle, ellipse, line, text, import image
+   - **Glyphs:** Pre-made graphics for sensors, math, etc.
+3. Draw or import SVG/PNG graphics
+4. Use minimal text, high-contrast colors, and NI style guide
+
+### Icon Design Tips
+
+- 32×32 resolution; test at small size
+- Use color coding by module (blue: math, red: error, green: acquisition)
+- Minimize text; prefer glyphs
+- Leave 1–2 px border clear to avoid cropping
+
+ > 💡 **Tip**  
+ > Import glyphs from `C:\Program Files\National Instruments\LabVIEW\Icons\Glossary`
+
+## Connector Pane Patterns
+
+Select patterns from the VI icon pop-up menu → **Show Connector → Patterns**
+
+| Pattern | Terminals | Use Case |
+|---------|-----------|----------|
+| 4x2x2x4 | 12 | Small VIs (≤ 6 inputs / 6 outputs) |
+| 5x3x3x5 | 20 | General-purpose subVIs |
+| 4x2x2x6 | 16 | Medium I/O with symmetry |
+| 6x4x4x6 | 28 | High-I/O drivers |
+
+### Assignment Guidelines
+
+- **Left side:** Inputs
+- **Right side:** Outputs
+- **Top/bottom:** Modifiers (enums, configs)
+- **Upper terminals:** Required inputs
+- **Lower terminals:** Optional inputs/outputs
+
+#### Assigning Terminals
+
+1. Right-click connector → **Assign Terminals**
+2. Click terminal → click control/indicator
+3. Arrow shows direction (requires data)
+4. **Document optional terminals** in VI description
+
+### Required vs. Recommended vs. Optional
+
+- **Required:** Must be wired or VI is broken
+- **Recommended:** Flagged as important but not enforced
+- **Optional:** May be left unwired
+
+Configure in Front Panel → right-click control → **Connector Pane → This Connection Is …**
+
+## Error Cluster Conventions
+
+Always include **error in** (upper-left outermost input) and **error out** (upper-right outermost output):
+
+| Terminal | Row | Column | Direction | Description |
+|----------|-----|--------|-----------|-------------|
+| error in | 1 | leftmost | Input | Error chain in |
+| error out | 1 | rightmost | Output | Error chain out |
+
+> 🔗 **Chaining Errors** ensures predictable execution order and error propagation.
+
+## Documentation & Style
+
+### VI Description
+
+1. **File → VI Properties → Documentation**
+2. Include:
+   - Purpose
+   - Inputs/outputs
+   - Range/units
+   - Errors & warnings
+   - Revision history
+
+### Tip Strips & Captions
+
+- Right-click control → **Description and Tip**
+- Provide concise usage hints
+
+### Block Diagram Style
+
+- Use label text (not captions) on diagram terminals
+- Group related nodes vertically
+- Avoid crossing wires: use **Clean Up** (Ctrl-U) sparingly
+
+## Modularization Workflow
+
+1. **Identify repeated patterns** or logical tasks
+2. Select block diagram code → **Create SubVI** (Ctrl-Shift-E)
+3. Customize icon & connector pane
+4. Add error handling
+5. Document thoroughly
+6. Create unit tests using VI Tester / LabVIEW Unit Test Framework
+
+## Example: Temperature Convert VI
+
+### Requirements
+- Convert °C to °F and vice versa
+- Input: temperature value, enum for direction
+- Output: converted value
+- Include error in/out terminals
+
+### Implementation Steps
+
+1. Front Panel
+   - Numeric input (Required)
+   - Enum (C→F, F→C) (Required)
+   - Numeric output (Output)
+   - Error clusters
+2. Icon
+   - Glyph: thermometer + arrows
+3. Connector Pane
+   - 4x2x2x4 pattern (12 terminals)
+4. Documentation
+   - Formula reference
+5. Unit Test
+   - C:100 → F:212; F:32 → C:0
+
+## Testing Your SubVIs
+
+### Manual Testing
+
+```g
+// Create test harness
+For Loop over test cases {
+    Test Input → Temperature Convert → Result
+    Expected Output → Compare → Pass?
+}
+```
+
+### Automated Testing
+
+- **VI Tester** (OpenG) framework
+- NI **Unit Test Framework Toolkit** (licensed)
+
+## Refactoring Legacy Code
+
+1. Identify monolithic VIs
+2. Extract cohesive code blocks into subVIs
+3. Replace duplicated code with subVI calls
+4. Ensure error chaining and documentation
+
+## SubVI Performance Considerations
+
+- Minimize front panel objects (affects memory)
+- Avoid unnecessary property nodes inside subVIs
+- Inline small VIs for speed (VI Properties → Performance → Inline)**
+
+## Key Takeaways
+
+- Custom icons + connector panes = professional VIs
+- Follow NI style guidelines for inputs/outputs orientation
+- Include error cluster terminals to ensure robustness
+- Document thoroughly with VI description and tip strips
+- Modular code improves readability, maintainability, and reuse
+
+---
+
+## Practice Exercises
+
+1. **Math Toolkit:** Create subVIs for mean, standard deviation, and RMS calculations with proper connectors and icons.
+2. **DAQ Helper VI:** Build a subVI that initializes a DAQ task and returns a task reference while handling errors.
+3. **String Utility Library:** Develop subVIs for trimming whitespace, case conversion, and substring extraction. Ensure consistent connector panes.
+
+---
+
+## Summary
+
+In this lesson, you've learned professional techniques for creating modular LabVIEW code:
+
+• Designed custom icons and selected appropriate connector panes  
+• Assigned terminals consistently and included error clusters  
+• Documented VIs for reuse and maintenance  
+• Applied modular programming principles for scalable applications  
+
+Up next → **Lesson 20: VI Analyzer & Advanced Debugging** – where you'll elevate your debugging skills with automated code reviews.

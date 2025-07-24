@@ -1,0 +1,323 @@
+---
+id: m3-charts-graphs
+title: Charts, Graphs & Plot Customisation
+description: Master LabVIEW's visual display capabilities with waveform charts, XY graphs, and advanced plotting techniques for data presentation.
+category: Charts & Graphs
+difficulty: intermediate
+estimatedTime: 18
+quiz:
+  - question: What is the main difference between a chart and a graph in LabVIEW?
+    options:
+      - Charts display static data, graphs display dynamic data
+      - Charts accept single points, graphs accept arrays of data
+      - Charts are 2D only, graphs can be 3D
+      - There is no difference
+    answer: Charts accept single points, graphs accept arrays of data
+  - question: Which graph type is best for plotting parametric equations like circles?
+    options:
+      - Waveform Graph
+      - Waveform Chart
+      - XY Graph
+      - Intensity Graph
+    answer: XY Graph
+---
+
+# Charts, Graphs & Plot Customisation
+
+Master LabVIEW's powerful visual display capabilities to create professional data presentations and real-time monitoring systems.
+
+## Learning Objectives
+
+After completing this lesson, you will be able to:
+- Distinguish between charts and graphs and choose the appropriate display type
+- Create and configure waveform charts for real-time data streaming
+- Build XY graphs for parametric plots and scatter diagrams
+- Customize plot appearance, scales, and legends
+- Use multiple plots and mixed Y-axis scaling
+
+---
+
+## Charts vs. Graphs: Understanding the Difference
+
+LabVIEW provides two main categories of visual displays:
+
+### Charts
+- **Accept single data points** and build up displays over time
+- **Best for real-time monitoring** and streaming data
+- **Maintain history** of previous data points
+- **Update continuously** as new data arrives
+
+### Graphs
+- **Accept arrays of data** all at once
+- **Best for displaying complete datasets**
+- **Replace entire display** with each update
+- **Faster plotting** for large datasets
+
+> 💡 **Memory Tip**  
+> **Charts** = **C**ontinuous streaming, **C**umulative history  
+> **Graphs** = **G**roup of data, **G**ets replaced each time
+
+## Waveform Charts
+
+Waveform charts are perfect for monitoring signals that change over time.
+
+### Basic Chart Operations
+
+```g
+// Wiring a single value to a chart
+Random Number (0-1) → Waveform Chart
+```
+
+### Chart Update Modes
+
+Charts have three update modes accessible via right-click:
+
+| Mode | Behavior | Use Case |
+|------|----------|----------|
+| **Strip Chart** | New data scrolls from right, old data shifts left | Continuous monitoring |
+| **Scope Chart** | Fills buffer, then overwrites from left | Oscilloscope-like display |
+| **Sweep Chart** | Vertical line sweeps across, erasing old data | Radar/sweep patterns |
+
+### Multi-Plot Charts
+
+Display multiple signals on one chart by bundling data:
+
+```g
+// Multiple plots using Bundle
+Temperature → Bundle → Waveform Chart
+Humidity ↗
+```
+
+> 📝 **Best Practice**  
+> Use different colors and line styles for each plot to improve readability.
+
+## Waveform Graphs
+
+Waveform graphs display complete arrays of Y-values with uniform X-spacing.
+
+### Single Plot Example
+
+```g
+// Basic sine wave
+Sine Wave Generator → Waveform Graph
+```
+
+### Multiple Plot Configuration
+
+```g
+// Multiple waveforms
+Array 1 → Build Array → Waveform Graph
+Array 2 ↗
+Array 3 ↗
+```
+
+### Time-Based Waveforms
+
+For time-domain signals, use the **Build Waveform** function:
+
+```g
+Data Array → Build Waveform → Waveform Graph
+dt (sampling rate) ↗
+t0 (start time) ↗
+```
+
+## XY Graphs
+
+XY graphs plot Y vs. X data, perfect for parametric equations, scatter plots, and non-uniform X-spacing.
+
+### Creating Parametric Plots
+
+```g
+// Circle equation: X = cos(t), Y = sin(t)
+Theta Array → Sine → Bundle → XY Graph
+           → Cosine ↗
+```
+
+### Multiple XY Plots
+
+```g
+// Two separate curves
+XY Data 1 → Build Array → XY Graph
+XY Data 2 ↗
+```
+
+## Plot Customization
+
+### Scale Configuration
+
+**Autoscale Settings:**
+- Right-click scale → AutoScale Y
+- Set minimum/maximum values manually
+- Configure logarithmic scaling
+
+**Time Axis Formatting:**
+- Right-click X-scale → Properties
+- Format: Time & Date
+- Choose display format
+
+### Legend and Appearance
+
+**Plot Legend:**
+- Right-click graph → Visible Items → Plot Legend
+- Change colors, line styles, and names
+- Set point styles for scatter plots
+
+**Graph Palette:**
+- Right-click graph → Visible Items → Graph Palette
+- Provides zoom, pan, and cursor tools
+- Enable/disable user interaction
+
+### Cursors
+
+Add measurement cursors for precise readouts:
+
+```g
+// Programmatic cursor control
+Cursor Position → Property Node → Graph Reference
+```
+
+**Cursor Types:**
+- **Single cursor:** One measurement point
+- **Multiple cursors:** Compare values
+- **Free cursors:** User can drag anywhere
+- **Lock to plot:** Cursor follows data points
+
+## Advanced Plotting Techniques
+
+### Mixed Signal Types
+
+Combine different data types on one display:
+
+```g
+// Analog + Digital signals
+Analog Waveform → Mixed Signal Graph
+Digital Pattern ↗
+```
+
+### 3D Surface Plots
+
+For three-dimensional data visualization:
+
+```g
+// Z = f(X,Y) surface
+2D Array → 3D Surface Graph
+```
+
+### Intensity Graphs
+
+Display matrix data as color-coded intensity:
+
+```g
+// Heat map display
+2D Numeric Array → Intensity Graph
+Color Table ↗
+```
+
+## Practical Example: Temperature Monitor
+
+Let's build a comprehensive temperature monitoring system:
+
+### Front Panel Setup
+1. **Waveform Chart** - Real-time temperature display
+2. **Digital Indicators** - Current, min, max values
+3. **Boolean LED** - Over-temperature alarm
+4. **Numeric Controls** - High/low limits
+
+### Block Diagram Logic
+
+```g
+// Main monitoring loop
+While Loop {
+    Temperature Sensor → Current Temp
+                      → Waveform Chart
+                      → Min/Max Tracking
+                      → Alarm Comparison
+    Wait (ms) → 1000
+}
+```
+
+### Customization Steps
+
+1. **Chart History:** Set buffer size to 3600 points (1 hour at 1-second intervals)
+2. **Y-Scale:** Set appropriate temperature range (0-100°C)
+3. **Alarm Zones:** Add colored regions for normal/warning/critical
+4. **Time Axis:** Configure for elapsed time display
+
+## Common Plotting Patterns
+
+### Real-Time Streaming
+```g
+// Continuous data acquisition
+DAQ Read → Chart (inside While Loop)
+```
+
+### Batch Processing
+```g
+// Complete dataset display
+Process Array → Graph (outside loop)
+```
+
+### Triggered Acquisition
+```g
+// Event-driven updates
+Trigger Event → Acquire Data → Update Graph
+```
+
+## Performance Optimization
+
+### For Charts
+- Limit history length to prevent memory issues
+- Use appropriate update rates (don't update faster than human perception ~30 Hz)
+- Consider decimation for high-speed data
+
+### For Graphs
+- Pre-allocate arrays when possible
+- Use appropriate data types (avoid unnecessary precision)
+- Bundle multiple updates to reduce flicker
+
+## Troubleshooting Common Issues
+
+### Problem: Chart Not Updating
+**Solution:** Ensure chart is inside loop and wired correctly
+
+### Problem: Graph Shows Wrong Scale
+**Solution:** Check autoscale settings and data range
+
+### Problem: Multiple Plots Not Appearing
+**Solution:** Use Build Array or Bundle functions correctly
+
+### Problem: Poor Performance
+**Solution:** Optimize update rates and buffer sizes
+
+---
+
+## Key Takeaways
+
+- **Charts** stream single points over time; **graphs** display complete arrays
+- Choose the right visualization type for your data and application
+- Customize appearance for professional presentations
+- Use cursors and legends for precise measurements
+- Optimize performance based on data rates and requirements
+
+---
+
+## Practice Exercises
+
+1. **Signal Generator Dashboard:** Create a VI with multiple waveform generators (sine, square, triangle) displayed on separate charts with different colors.
+
+2. **XY Parametric Plotter:** Build a VI that plots various parametric equations (circle, spiral, Lissajous figures) on an XY graph with user-selectable parameters.
+
+3. **Data Logger Viewer:** Design a comprehensive data logging interface with real-time charts, historical graphs, and statistical displays.
+
+---
+
+## Summary
+
+In this lesson, you've mastered LabVIEW's charting and graphing capabilities:
+
+• Distinguished between charts (single points) and graphs (arrays)  
+• Configured waveform charts for real-time monitoring  
+• Created XY graphs for parametric and scatter plots  
+• Customized plot appearance and user interaction features  
+
+Up next → **Lesson 17: File I/O Basics** – where you'll learn to save and load your plotted data to disk files.

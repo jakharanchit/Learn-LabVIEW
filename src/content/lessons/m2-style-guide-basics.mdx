@@ -1,0 +1,454 @@
+---
+id: m2-style-guide-basics
+title: LabVIEW Style Guide Essentials
+description: Learn the fundamental coding conventions and best practices that make LabVIEW code professional, readable, and maintainable.
+category: LabVIEW IDE Fluency
+difficulty: beginner
+estimatedTime: 20
+quiz:
+  - question: What is the recommended maximum width for LabVIEW block diagrams?
+    options:
+      - 600 pixels
+      - 800 pixels  
+      - 1024 pixels
+      - No limit
+    answer: 800 pixels
+  - question: Which alignment practice improves block diagram readability?
+    options:
+      - Random placement of objects
+      - Aligning objects along invisible grid lines
+      - Clustering all objects in one corner
+      - Using only diagonal wires
+    answer: Aligning objects along invisible grid lines
+---
+
+# LabVIEW Style Guide Essentials
+
+Develop professional coding habits that make your LabVIEW programs maintainable, readable, and bug-free. This lesson covers the essential conventions that separate beginner code from professional-quality applications.
+
+## Prerequisites
+
+- Understanding of basic LabVIEW objects (controls, indicators, functions)
+- Experience creating and editing VIs
+- Familiarity with block diagrams and front panels
+
+## Learning Objectives
+
+By the end of this lesson, you will be able to:
+- Apply consistent naming conventions to LabVIEW objects
+- Organize block diagrams for maximum readability
+- Use proper wiring techniques and visual alignment
+- Create professional-looking front panels
+- Follow documentation standards for maintainable code
+
+---
+
+## Why Style Matters
+
+### The Professional Difference
+
+Good LabVIEW style is like good writing - it communicates your ideas clearly and makes your work accessible to others (including your future self).
+
+**Benefits of Good Style:**
+- **Reduced debugging time** - Clean code reveals problems faster
+- **Easier maintenance** - Consistent patterns speed up modifications  
+- **Team collaboration** - Others can understand and extend your work
+- **Professional appearance** - Clean code builds trust with users
+- **Fewer bugs** - Organized code prevents common errors
+
+> 💡 **Industry Insight**  
+> Professional LabVIEW developers can spot amateur code instantly. Good style habits mark you as a serious programmer.
+
+---
+
+## 1. Naming Conventions
+
+### Control and Indicator Names
+
+**Use Descriptive Names**
+```
+❌ Bad: "Numeric", "Numeric 2", "Boolean"
+✅ Good: "Temperature (°C)", "Max Voltage", "Enable Logging"
+```
+
+**Follow Consistent Patterns**
+- Use Title Case for display names: "Sample Rate"
+- Include units when relevant: "Pressure (PSI)"
+- Be specific: "Start Button" not just "Button"
+
+### VI Names
+
+**File Naming Standards**
+```
+✅ Good Examples:
+- "Calculate Temperature.vi"
+- "Read Sensor Data.vi"  
+- "Format Report.vi"
+
+❌ Avoid:
+- "VI1.vi"
+- "temp.vi"
+- "My VI (Copy).vi"
+```
+
+**SubVI Naming**
+- Use action verbs: "Convert", "Calculate", "Format"
+- Be specific about function: "Convert Celsius to Fahrenheit"
+- Avoid abbreviations unless standard: "Read DAQ" (not "Rd DQ")
+
+### Variable and Constant Naming
+
+**Wire Labels**
+Use descriptive wire labels for complex diagrams:
+```
+✅ Good: "Filtered Signal", "User Input", "Error Status"
+❌ Bad: "Data", "Output", "Temp"
+```
+
+---
+
+## 2. Block Diagram Organization
+
+### Layout Principles
+
+**Left-to-Right Data Flow**
+- Data should generally flow from left to right
+- Inputs on the left, outputs on the right
+- Avoid backward-flowing wires when possible
+
+**Functional Grouping**
+- Group related operations together
+- Use whitespace to separate logical sections
+- Align related objects horizontally and vertically
+
+### The Grid System
+
+**Enable Alignment Grid**
+1. View → Alignment Grid
+2. Set appropriate grid spacing (11-13 pixels recommended)
+3. Use Align Objects tools for precise positioning
+
+```
+Tools → Align Objects → Align Lefts/Rights/Tops/Bottoms
+```
+
+### Recommended Dimensions
+
+**Block Diagram Size**
+- **Maximum width**: 800 pixels (fits standard screens)
+- **Maximum height**: 600 pixels (prevents excessive scrolling)
+- **Use scrolling**: Only when absolutely necessary
+
+**Object Spacing**
+- **Between functions**: 1-2 grid spaces minimum
+- **Between groups**: 3-4 grid spaces
+- **Wire bend radius**: Avoid sharp angles
+
+---
+
+## 3. Wiring Best Practices
+
+### Clean Wiring Techniques
+
+**Minimize Wire Bends**
+```
+✅ Good: Straight lines and 90-degree angles
+❌ Bad: Diagonal wires and unnecessary bends
+```
+
+**Avoid Crossed Wires**
+- Rearrange objects to eliminate crossings
+- Use longer paths instead of shortcuts that cross
+- Consider using wire tunnels through structures
+
+**Wire Routing Standards**
+- **Horizontal first**: Route horizontally before turning vertical
+- **Bundle common wires**: Group related wires together
+- **Use consistent spacing**: Maintain uniform wire separation
+
+### Managing Wire Clutter
+
+**Techniques for Complex Diagrams**
+1. **Use clusters** to bundle related data
+2. **Create subVIs** to reduce wire count  
+3. **Use local variables** sparingly for UI updates
+4. **Employ wire labels** for documentation
+
+---
+
+## 4. Front Panel Design
+
+### Professional Layout
+
+**Control Placement**
+- **Logical grouping**: Related controls together
+- **User workflow**: Arrange in order of use
+- **Visual hierarchy**: Most important controls prominent
+
+**Consistent Spacing**
+- Use equal spacing between similar objects
+- Align objects along invisible grid lines
+- Create visual breathing room with whitespace
+
+### Visual Standards
+
+**Color Schemes**
+- **System colors**: Use default colors when possible
+- **Consistent palette**: Limit color choices
+- **Functional color**: Red for stop, green for go
+- **High contrast**: Ensure readability
+
+**Typography**
+- **Consistent fonts**: Use 1-2 font families maximum
+- **Appropriate sizes**: 10-12pt for most text
+- **Clear labels**: Descriptive but concise
+
+---
+
+## 5. Documentation Standards
+
+### Inline Documentation
+
+**VI Descriptions**
+Every VI should have:
+- **Purpose**: What does this VI do?
+- **Inputs**: What data is required?
+- **Outputs**: What does it return?
+- **Notes**: Special considerations or limitations
+
+```
+Access via: File → VI Properties → Documentation
+```
+
+**Code Comments**
+Use block diagram comments for:
+- Complex algorithms
+- Unusual solutions
+- Important assumptions
+- Performance considerations
+
+### Icon Design
+
+**Professional VI Icons**
+- **Simple graphics**: Clear at small sizes
+- **Consistent style**: Use similar design patterns
+- **Descriptive**: Icon should suggest function
+- **Text labels**: Include abbreviated function name
+
+**Icon Design Process**
+1. Open Icon Editor (double-click VI icon)
+2. Use 32x32 pixel canvas effectively
+3. Test readability at actual size
+4. Maintain visual consistency across project
+
+---
+
+## 6. Structure Organization
+
+### Loop Standards
+
+**For Loops**
+- Place iteration terminal clearly visible
+- Auto-indexing: Enable/disable intentionally
+- Keep loop contents organized and aligned
+
+**While Loops**  
+- Stop condition clearly visible
+- Avoid infinite loops with proper termination
+- Place timing functions appropriately
+
+**Case Structures**
+- **Default case**: Always include when appropriate
+- **Case labels**: Use descriptive labels, not just numbers
+- **Consistent outputs**: All cases must wire output tunnels
+
+### Error Handling Layout
+
+**Error Wire Placement**
+- Route error wires along bottom of diagram
+- Keep error flow visible and traceable
+- Use error clusters consistently throughout
+
+```
+Standard Pattern:
+Input Error → Function → Output Error
+```
+
+---
+
+## 7. SubVI Best Practices
+
+### Interface Design
+
+**Connector Pane Layout**
+- **Inputs on left**: Following dataflow convention
+- **Outputs on right**: Results and error outputs
+- **Standard patterns**: Use recommended connector patterns
+- **Error terminals**: Always include error in/out
+
+**Parameter Organization**
+```
+Recommended Order:
+1. Primary data inputs
+2. Configuration parameters  
+3. Error input (bottom left)
+4. Primary data outputs
+5. Status outputs
+6. Error output (bottom right)
+```
+
+### Hierarchical Organization
+
+**SubVI Structure**
+- **Single purpose**: Each VI does one thing well
+- **Appropriate level**: Not too high or too low level
+- **Reusable**: Designed for multiple use cases
+- **Self-contained**: Minimal external dependencies
+
+---
+
+## 8. Common Style Mistakes
+
+### Block Diagram Issues
+
+❌ **Crossed wires everywhere**
+✅ Rearrange objects to minimize crossings
+
+❌ **Random object placement**  
+✅ Use grid alignment and logical grouping
+
+❌ **Unclear dataflow direction**
+✅ Maintain left-to-right flow pattern
+
+❌ **No whitespace or organization**
+✅ Group related functions with spacing
+
+### Front Panel Problems
+
+❌ **Default object names** ("Numeric", "Boolean")
+✅ Descriptive, meaningful labels
+
+❌ **Poor visual hierarchy**
+✅ Important controls stand out
+
+❌ **Inconsistent styling**
+✅ Uniform colors, fonts, and spacing
+
+---
+
+## 9. Style Enforcement Tools
+
+### LabVIEW Built-in Tools
+
+**VI Analyzer** (Professional version)
+- Automated style checking
+- Customizable rules
+- Batch processing for projects
+- Generates style reports
+
+**Project Organization**
+- Use LabVIEW projects for large applications
+- Organize VIs into logical folders
+- Maintain consistent file naming
+
+### Manual Review Process
+
+**Code Review Checklist**
+- [ ] Meaningful names for all objects
+- [ ] Clean, organized block diagram layout
+- [ ] Proper error handling throughout
+- [ ] Consistent front panel design
+- [ ] Complete VI documentation
+- [ ] Professional icon design
+
+---
+
+## Practical Application
+
+### Style Makeover Exercise
+
+**Before: Poor Style**
+```
+Issues:
+- Generic names ("Numeric", "Boolean")
+- Crossed wires
+- No alignment
+- Random colors
+- Missing documentation
+```
+
+**After: Professional Style**
+```
+Improvements:
+- Descriptive names ("Sample Rate (Hz)", "Enable Data Logging")
+- Clean wire routing
+- Grid-aligned objects
+- Consistent color scheme  
+- Complete documentation
+```
+
+---
+
+## Industry Standards
+
+### Team Development
+
+**Style Guides**
+Many organizations maintain internal LabVIEW style guides covering:
+- Naming conventions specific to their domain
+- Color coding standards
+- Icon design requirements
+- Documentation templates
+
+**Version Control Considerations**
+- Consistent formatting aids version control
+- Clean diagrams produce better diffs
+- Standardized layouts reduce merge conflicts
+
+---
+
+## Key Takeaways
+
+- **Consistency** is more important than perfection
+- **Readability** serves both current and future developers  
+- **Organization** prevents bugs and speeds development
+- **Documentation** is part of good style, not optional
+- **Professional appearance** builds user confidence
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Style Audit
+1. Open one of your existing VIs
+2. Identify style issues using the checklist above
+3. Apply corrections systematically
+4. Compare before and after screenshots
+
+### Exercise 2: Clean Slate Design
+1. Create a new VI with 4-5 functions
+2. Apply all style guidelines from the start
+3. Focus on alignment, naming, and organization
+4. Document your design decisions
+
+### Exercise 3: Icon Design
+1. Create professional icons for 3 VIs
+2. Test readability at small sizes
+3. Maintain consistent visual style
+4. Include descriptive text elements
+
+---
+
+## Summary
+
+In this lesson, you learned the fundamental style principles that distinguish professional LabVIEW code:
+
+• **Naming conventions** that make code self-documenting  
+• **Block diagram organization** for maximum readability  
+• **Wiring techniques** that minimize visual clutter  
+• **Front panel design** principles for professional appearance  
+• **Documentation standards** that ensure maintainability  
+
+Good style is a habit that pays dividends throughout your career. Start applying these principles consistently, and they'll become second nature.
+
+Up next → **Lesson 13: Mini-Exam F1** – Test your understanding of LabVIEW fundamentals with quiz questions and hands-on VI challenges.

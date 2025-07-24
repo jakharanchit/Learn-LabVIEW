@@ -1,0 +1,308 @@
+---
+id: m1-getting-started-hello-g
+title: Your First VI – "Hello G"
+description: Build, run and save a simple VI that demonstrates basic LabVIEW programming concepts including controls, indicators, and wiring.
+category: Getting Started
+difficulty: beginner
+estimatedTime: 25
+quiz:
+  - question: What color wire represents Boolean data in LabVIEW?
+    options:
+      - Orange
+      - Blue
+      - Green
+      - Pink
+    answer: Green
+  - question: What key toggles between tools while wiring?
+    options:
+      - Tab
+      - Shift
+      - Spacebar
+      - Ctrl
+    answer: Spacebar
+---
+
+# Your First VI – "Hello G"
+
+Create your first LabVIEW Virtual Instrument (VI) and discover the fundamentals of graphical programming. You'll build a simple program that demonstrates controls, indicators, basic functions, and the dataflow programming paradigm that makes LabVIEW unique.
+
+## Prerequisites
+
+- LabVIEW installed and tour completed (previous lessons)
+- Understanding of basic IDE components
+
+## Overview
+
+In this lesson, you'll create a VI that:
+- Takes two numbers as input
+- Performs a mathematical operation
+- Displays the result
+- Demonstrates proper LabVIEW programming style
+
+This simple program will introduce you to the core concepts that power all LabVIEW applications.
+
+## Understanding LabVIEW Terminology
+
+Before we begin, let's clarify some key terms:
+
+- **VI (Virtual Instrument)** - A LabVIEW program
+- **Front Panel** - The user interface
+- **Block Diagram** - The code/logic
+- **Control** - Input from user (data source)
+- **Indicator** - Output to user (data sink)
+- **Terminal** - Block diagram representation of front panel objects
+- **Wire** - Data connection between terminals
+- **Function** - Built-in operation (Add, Multiply, etc.)
+
+## Step 1: Create a New VI
+
+1. Launch LabVIEW
+2. In the **Getting Started** window, click **Blank VI**
+3. You'll see two windows open:
+   - **Front Panel** - currently empty
+   - **Block Diagram** - also empty
+
+> 💡 **Tip**  
+> Use **Ctrl+E** to quickly switch between the front panel and block diagram.
+
+## Step 2: Design the Front Panel
+
+### Adding Input Controls
+
+1. Make sure the **front panel** is active (click on it)
+2. Right-click in empty space to open the **Controls palette**
+3. Navigate to **Modern → Numeric**
+4. Select **Numeric Control** 
+5. Click to place it on the front panel
+6. **Double-click** the label and rename it to **"First Number"**
+7. Repeat to add a second **Numeric Control** labeled **"Second Number"**
+
+### Adding an Output Indicator
+
+1. From **Modern → Numeric**, select **Numeric Indicator**
+2. Place it on the front panel
+3. Label it **"Result"**
+
+### Adding a Control Button
+
+1. Navigate to **Modern → Boolean**
+2. Select **OK Button**
+3. Place it on the front panel
+4. Label it **"Calculate"**
+
+Your front panel should now look organized with two inputs, one output, and a button.
+
+## Step 3: Build the Block Diagram
+
+### Understanding Terminals
+
+1. Switch to the **block diagram** (Ctrl+E)
+2. Notice the **terminals** corresponding to your front panel objects:
+   - **Controls** have thick borders with arrows pointing right (data sources)
+   - **Indicators** have thin borders with arrows pointing left (data sinks)
+
+### Adding the Add Function
+
+1. Right-click in empty space to open the **Functions palette**
+2. Navigate to **Programming → Numeric**
+3. Select the **Add** function
+4. Place it between your control and indicator terminals
+
+### Wiring the Circuit
+
+Now comes the exciting part - connecting everything with wires!
+
+1. Select the **Wiring tool** from the Tools palette (or it may auto-select)
+2. Click on the **First Number** terminal (data flows out)
+3. Click on the **left input** of the Add function
+4. Wire the **Second Number** terminal to the **right input** of the Add function
+5. Wire the **output** of the Add function to the **Result** indicator terminal
+
+> ✅ **Best Practice**  
+> Wires should be neat and avoid crossing when possible. Use the spacebar while wiring to change wire direction.
+
+### Understanding Wire Colors
+
+Different data types have different colored wires:
+- **Orange** - Floating-point numbers (DBL)
+- **Blue** - Integers (I32)  
+- **Green** - Boolean (True/False)
+- **Pink** - Strings (text)
+
+## Step 4: Run and Test Your VI
+
+### Running the Program
+
+1. Return to the **front panel** (Ctrl+E)
+2. Enter values in both numeric controls (e.g., 5 and 3)
+3. Click the **Run** button (arrow) in the toolbar
+4. Observe the result appear in the indicator
+
+### The Run Button States
+
+- **Solid arrow** - VI is ready to run
+- **Broken arrow** - VI has errors and cannot run
+- **Running arrow** - VI is currently executing
+
+## Step 5: Understanding Dataflow
+
+### What Just Happened?
+
+When you ran the VI:
+1. Data flowed from the controls through their terminals
+2. The Add function waited until it received data on both inputs
+3. Once both inputs had data, the function executed
+4. The result flowed to the indicator terminal and appeared on the front panel
+
+This is **dataflow programming** - functions execute when their input data is available, not based on sequential lines of code.
+
+### Dataflow Rules
+
+- A function executes only when **all** its inputs have data
+- Data flows immediately from outputs to connected inputs
+- Multiple functions can execute simultaneously if their data is ready
+- No function executes until its input requirements are met
+
+## Step 6: Enhance Your VI
+
+### Add More Functionality
+
+Let's make the VI more interesting by adding additional operations:
+
+1. **Block diagram**: Add **Subtract**, **Multiply**, and **Divide** functions
+2. **Front panel**: Add corresponding indicators for each result
+3. Wire all operations to use the same two input controls
+4. Run the VI to see all results simultaneously
+
+### Adding Error Handling
+
+1. Add a **Divide by Zero** check using the **Equal?** function
+2. Compare the second number to zero
+3. Use a **Boolean indicator** to warn when division by zero occurs
+
+## Step 7: Save Your Work
+
+### Proper VI Naming
+
+1. **File → Save** (Ctrl+S)
+2. Navigate to your work directory
+3. Name it **"Hello G.vi"**
+4. Click **Save**
+
+> ⚠️ **Important**  
+> Always save VIs with descriptive names and in organized folders. Avoid spaces in filenames for compatibility.
+
+## Step 8: Document Your VI
+
+### Adding VI Description
+
+1. **File → VI Properties**
+2. Go to **Documentation** tab
+3. Add a description: *"My first LabVIEW VI - demonstrates basic math operations"*
+4. Add your name as the author
+5. Click **OK**
+
+### Labeling Objects
+
+1. Right-click on any front panel object
+2. Select **Properties**
+3. In **Documentation** tab, add descriptions
+4. These appear in Context Help when you hover over objects
+
+## Common Beginner Mistakes
+
+### 1. Broken Wires
+**Problem**: Trying to wire incompatible data types  
+**Solution**: Check wire colors and use conversion functions if needed
+
+### 2. Unwired Inputs
+**Problem**: Function won't execute because an input is missing  
+**Solution**: Ensure all required inputs are wired or use default values
+
+### 3. Backwards Wiring
+**Problem**: Trying to wire from indicator to control  
+**Solution**: Remember dataflow - data flows from sources (controls) to sinks (indicators)
+
+### 4. Missing Error Handling
+**Problem**: VI stops unexpectedly on errors  
+**Solution**: Add basic error checking, especially for division operations
+
+## Practice Exercises
+
+### Exercise 1: Temperature Converter
+Create a VI that converts Celsius to Fahrenheit using the formula: F = (C × 9/5) + 32
+
+### Exercise 2: Circle Calculator
+Build a VI that calculates area and circumference of a circle given its radius.
+
+### Exercise 3: Boolean Logic
+Create a VI with two Boolean controls and show the results of AND, OR, and XOR operations.
+
+## Keyboard Shortcuts Learned
+
+| Shortcut | Function |
+|----------|----------|
+| **Ctrl+E** | Switch between front panel and block diagram |
+| **Ctrl+S** | Save VI |
+| **Ctrl+R** | Run VI |
+| **Ctrl+.** | Abort VI execution |
+| **Tab** | Cycle through tools |
+| **Space** | Toggle between Operating and Positioning tools |
+
+## Key Programming Concepts
+
+### Controls vs Indicators
+- **Controls** provide input data (thick border terminals)
+- **Indicators** display output data (thin border terminals)
+- Data flows from controls to indicators, never the reverse
+
+### Functions and Wiring
+- Functions perform operations on data
+- All required inputs must be wired before execution
+- Outputs immediately provide data to connected wires
+
+### Dataflow Execution
+- No sequential execution like text-based languages
+- Functions execute when input data is available
+- Multiple functions can run simultaneously
+- Natural parallelism without threading complexity
+
+## Troubleshooting Guide
+
+### "My VI won't run!"
+1. Check for **broken run arrow**
+2. Open **Error List** window (Windows → Error List)
+3. Fix wiring errors or missing connections
+
+### "Nothing happens when I run!"
+1. Verify all function inputs are wired
+2. Check that controls have values entered
+3. Ensure data types are compatible
+
+### "Wires look broken!"
+1. **Edit → Remove Broken Wires**
+2. Re-wire connections carefully
+3. Check data type compatibility
+
+## Best Practices Established
+
+1. **Organize the front panel** logically with inputs on left, outputs on right
+2. **Label everything** clearly and descriptively  
+3. **Keep wiring neat** - avoid crossed wires when possible
+4. **Save frequently** with meaningful names
+5. **Test thoroughly** with various input values
+6. **Document your work** for future reference
+
+## Summary
+
+Congratulations! You've created your first LabVIEW VI and learned fundamental concepts:
+
+• **Dataflow programming** - execution based on data availability  
+• **Controls and indicators** - input and output interface elements  
+• **Wiring** - connecting data paths between functions  
+• **Functions** - built-in operations that process data  
+• **VI structure** - front panel UI and block diagram code  
+
+These concepts form the foundation for all LabVIEW programming. As you progress, you'll build more complex VIs using these same principles.
+
+Up next → **Lesson 4: Mastering Palettes & Quick-Drop** – where you'll learn to navigate LabVIEW's extensive function libraries efficiently!
