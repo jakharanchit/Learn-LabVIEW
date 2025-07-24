@@ -4,7 +4,7 @@ import type { MarkdownLesson, LabviewExample, StandaloneQuiz, Achievement } from
 import { mockExamples } from '../content/examples';
 import { mockQuizzes } from '../content/quizzes';
 import { mockAchievements } from '../content/achievements';
-import { lessonMeta, LessonMeta } from '../content/lessons/lessonMeta';
+import { lessonMeta } from '../content/lessons/lessonMeta';
 
 // Import all MDX files as modules with default export only
 const lessonModules = import.meta.glob('../content/lessons/*.mdx', { eager: true });

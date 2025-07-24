@@ -1,5 +1,5 @@
 // AUTO-GENERATED FILE. DO NOT EDIT.
-import type { MarkdownLesson } from '../../types';
+
 
 export interface LessonMeta {
   id: string;
@@ -623,12 +623,12 @@ export const lessonMeta: LessonMeta[] = [
       {
         "question": "What is the maximum number of terminals allowed on a LabVIEW connector pane?",
         "options": [
-          12,
-          28,
-          32,
-          64
+          "12",
+          "28",
+          "32",
+          "64"
         ],
-        "answer": 28
+        "answer": "28"
       },
       {
         "question": "Which connector pane pattern is recommended for general-purpose subVIs?",
