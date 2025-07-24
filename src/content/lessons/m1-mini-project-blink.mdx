@@ -1,0 +1,431 @@
+---
+id: m1-mini-project-blink
+title: Mini-Project – Blink-LED VI
+description: Build your first complete LabVIEW application that combines loops, timing, and user controls to create a customizable LED blinker.
+category: Structures 101
+difficulty: beginner
+estimatedTime: 25
+quiz:
+  - question: In the Blink-LED project, what determines the blink rate?
+    options:
+      - The While Loop iteration count
+      - The Wait (ms) function timing
+      - The Boolean LED state
+      - The front panel size
+    answer: The Wait (ms) function timing
+  - question: Why do we use a Case Structure in the Blink-LED VI?
+    options:
+      - To create different blink patterns
+      - To control when blinking starts and stops
+      - To change LED colors
+      - To manage multiple LEDs
+    answer: To control when blinking starts and stops
+---
+
+# Mini-Project – Blink-LED VI
+
+It's time to put your newfound skills to work! In this mini-project, you'll build a complete LabVIEW application that demonstrates loops, timing, Boolean logic, and user interface design. The Blink-LED VI will be your first fully functional LabVIEW program.
+
+## Prerequisites
+
+- Completed lessons on LabVIEW basics, data types, and structures
+- Understanding of While Loops and Case Structures
+- Knowledge of timing functions
+
+## Project Objectives
+
+By completing this project, you will:
+- Design a user-friendly front panel interface
+- Implement program logic using structures and timing
+- Create a responsive, user-controlled application
+- Practice good LabVIEW programming techniques
+- Build a VI that can serve as a template for future projects
+
+## Project Specification
+
+### What We're Building
+
+A customizable LED blinker with the following features:
+
+**User Controls:**
+- Start/Stop blinking
+- Adjustable blink rate (0.1 to 5.0 Hz)
+- Manual LED on/off override
+- Reset functionality
+
+**Visual Feedback:**
+- Large LED indicator showing current state
+- Blink rate display in Hz
+- Status messages
+- Professional appearance
+
+**Program Behavior:**
+- Smooth, predictable blinking
+- Immediate response to user inputs
+- Proper cleanup when stopped
+- No CPU waste when idle
+
+## Step 1: Design the Front Panel
+
+### Setting Up the Interface
+
+1. **Create a new VI**
+   - File → New VI (or Ctrl+N)
+   - Save immediately as "Blink-LED.vi" in your MYWORK directory
+
+2. **Add the main LED indicator**
+   - Modern → Boolean → Round LED
+   - Resize to approximately 100x100 pixels
+   - Label: "Status LED"
+   - Position in upper-left area
+
+3. **Add control buttons**
+   ```
+   Start Blinking (Boolean Button)
+   Stop Blinking (Boolean Button) 
+   Manual LED Control (Toggle Switch)
+   Reset (Boolean Button)
+   ```
+
+4. **Add rate control**
+   - Modern → Numeric → Knob
+   - Label: "Blink Rate (Hz)"
+   - Set range: 0.1 to 5.0
+   - Default value: 1.0
+
+5. **Add status displays**
+   ```
+   Current Rate (Numeric Indicator)
+   Blink Count (Numeric Indicator)
+   Status Message (String Indicator)
+   ```
+
+### Front Panel Layout Tips
+
+**Organized Grouping:**
+```
+┌─ LED Display ─────────┐  ┌─ Controls ────────┐
+│                       │  │                   │
+│    [Large LED]        │  │ Start Blinking    │
+│                       │  │ Stop Blinking     │
+│ Blink Count: 0        │  │ Manual LED        │
+│ Status: Ready         │  │ Reset             │
+└───────────────────────┘  └───────────────────┘
+
+┌─ Rate Control ────────────────────────────────┐
+│                                               │
+│    Rate: [  Knob  ]  Current: 1.00 Hz        │
+│                                               │
+└───────────────────────────────────────────────┘
+```
+
+**Professional Appearance:**
+- Use consistent spacing between elements
+- Align controls properly
+- Choose appropriate sizes for visibility
+- Add decorative frames for grouping
+
+## Step 2: Plan the Program Logic
+
+### State Machine Approach
+
+Our LED blinker needs to handle different operating modes:
+
+1. **Idle State**: Waiting for user input
+2. **Blinking State**: Automatically toggling LED
+3. **Manual State**: User controls LED directly
+4. **Cleanup State**: Resetting counters and status
+
+### Logic Flow
+
+```
+Start Program
+    ↓
+Initialize Variables
+    ↓
+While Loop: ┌─→ Read User Controls
+           │      ↓
+           │  Case Structure (Operating Mode):
+           │    • Idle: Wait for start command
+           │    • Blink: Toggle LED with timing
+           │    • Manual: Follow manual control
+           │    • Reset: Clear counters
+           │      ↓
+           │  Update Displays
+           │      ↓
+           │  Timing Control
+           │      ↓
+           └─ Check Stop Condition
+```
+
+## Step 3: Build the Block Diagram
+
+### Initialize the Program Structure
+
+1. **Create the main While Loop**
+   - Programming → Structures → While Loop
+   - Make it large enough for your logic
+
+2. **Add a Case Structure inside**
+   - Programming → Structures → Case Structure
+   - This will handle different operating modes
+
+### Implement the Control Logic
+
+**Operating Mode Determination:**
+```vhdl
+Case Structure Selector Logic:
+Start Blinking AND NOT Manual Control → "Blinking"
+Manual Control → "Manual"  
+Reset → "Reset"
+Default → "Idle"
+```
+
+**Case 1: Idle Mode**
+```vhdl
+Idle Case:
+  LED ← FALSE
+  Status Message ← "Ready - Press Start to begin"
+  // No blinking, just wait
+```
+
+**Case 2: Blinking Mode**
+```vhdl
+Blinking Case:
+  // Calculate timing
+  Period (ms) ← 500 / Blink Rate  // Half period for each state
+  
+  // Toggle LED state
+  Previous LED State → NOT → Current LED State
+  
+  // Update counter (count rising edges)
+  If LED goes from FALSE to TRUE:
+    Blink Count ← Blink Count + 1
+  
+  Status Message ← "Blinking at " + Rate + " Hz"
+  
+  // Wait for half period
+  Wait (ms) ← Period
+```
+
+**Case 3: Manual Mode**
+```vhdl
+Manual Case:
+  LED ← Manual LED Control
+  Status Message ← "Manual Control Active"
+  // Immediate response, no automatic timing
+```
+
+**Case 4: Reset Mode**
+```vhdl
+Reset Case:
+  LED ← FALSE
+  Blink Count ← 0
+  Status Message ← "Reset - Ready for new sequence"
+  // Clear all counters and states
+```
+
+### Add Timing and Updates
+
+**Essential timing for smooth operation:**
+```vhdl
+Outside Case Structure:
+  Current Rate ← Blink Rate (update display)
+  
+  General Timing:
+    Wait (ms) ← 50  // 20 Hz UI update rate
+    
+  Stop Condition:
+    Stop Blinking → While Loop Conditional
+```
+
+## Step 4: Advanced Features
+
+### Shift Registers for State Memory
+
+**LED State Memory:**
+- Add shift register to While Loop
+- Stores previous LED state for toggling
+- Initialize with FALSE
+
+**Blink Counter Memory:**
+- Use shift register for persistent count
+- Increment only on LED rising edge
+- Preserve count between blink sessions
+
+### Rate Calculation and Display
+
+**Dynamic Rate Display:**
+```vhdl
+Actual Blink Rate Calculation:
+  Time per Blink ← Last Toggle Time - Previous Toggle Time
+  Measured Rate ← 1000 / Time per Blink
+  Display ← Measured Rate (filtered for stability)
+```
+
+### Error Prevention
+
+**Safe Rate Limiting:**
+```vhdl
+Rate Validation:
+  Input Rate → Clip (0.1 to 5.0) → Safe Rate
+  Period Calculation ← 500 / Safe Rate
+  Minimum Period Check → Max(Period, 10)  // Prevent too-fast blinking
+```
+
+## Step 5: Testing and Refinement
+
+### Test Scenarios
+
+1. **Basic Functionality**
+   - Start/stop blinking works correctly
+   - Rate control changes blink speed
+   - Manual control overrides blinking
+
+2. **Edge Cases**
+   - Very fast rates (5 Hz)
+   - Very slow rates (0.1 Hz)
+   - Rapid start/stop clicking
+   - Rate changes during blinking
+
+3. **User Experience**
+   - Controls respond immediately
+   - Display updates are smooth
+   - Status messages are clear
+   - Reset function works properly
+
+### Performance Optimization
+
+**CPU Usage:**
+- Monitor Task Manager during operation
+- Should use &lt5% CPU when blinking
+- UI should remain responsive
+
+**Memory Usage:**
+- No growing arrays or unbounded data
+- Proper cleanup when stopped
+
+## Step 6: Documentation and Enhancement
+
+### Adding Polish
+
+**Visual Enhancements:**
+- Custom colors for different states (green=running, red=stopped)
+- Progress indicators for long blinks
+- Sound effects (optional)
+
+**Functional Improvements:**
+- Save/load blink patterns
+- Multiple LED support
+- Preset rate buttons (1 Hz, 2 Hz, 5 Hz)
+
+### Code Documentation
+
+Add description block diagram comments:
+```
+"Main control loop - handles user input and LED timing"
+"Blink rate conversion from Hz to milliseconds" 
+"State machine for different operating modes"
+"Counter management with edge detection"
+```
+
+## Complete Code Structure
+
+### Final Block Diagram Overview
+
+```vhdl
+While Loop:
+  ┌─ Read Controls ────────────────────┐
+  │ Start Button, Stop Button          │
+  │ Rate Knob, Manual Switch, Reset    │
+  └────────────────────────────────────┘
+           ↓
+  ┌─ Determine Mode ───────────────────┐
+  │ Boolean logic to select case       │
+  └────────────────────────────────────┘
+           ↓
+  ┌─ Case Structure ───────────────────┐
+  │ • Idle: LED off, wait              │
+  │ • Blink: Toggle with timing        │
+  │ • Manual: Follow manual control    │  
+  │ • Reset: Clear counters            │
+  └────────────────────────────────────┘
+           ↓
+  ┌─ Update Displays ──────────────────┐
+  │ LED, Rate, Count, Status           │
+  └────────────────────────────────────┘
+           ↓
+  ┌─ Timing & Loop Control ────────────┐
+  │ Wait (ms) + Stop condition         │
+  └────────────────────────────────────┘
+```
+
+## Common Implementation Challenges
+
+### Challenge 1: Smooth Blinking
+
+**Problem:** LED blinks unevenly or jitters
+**Solution:** 
+- Use consistent timing calculations
+- Avoid unnecessary processing in blink loop
+- Separate UI updates from blink timing
+
+### Challenge 2: Responsive Controls
+
+**Problem:** Buttons don't respond during blinking
+**Solution:**
+- Keep UI update rate fast (20-50 Hz)
+- Read controls every iteration
+- Don't block with long delays
+
+### Challenge 3: Accurate Rate Control
+
+**Problem:** Actual blink rate doesn't match setting
+**Solution:**
+- Account for processing time in calculations
+- Use proper period calculation: Period = 500/Rate
+- Validate input ranges
+
+## Extensions and Variations
+
+Once you master the basic Blink-LED VI, try these variations:
+
+### Multi-LED Patterns
+- Control multiple LEDs
+- Create chase patterns
+- Implement traffic light sequences
+
+### Advanced Timing
+- Use precise timing functions
+- Implement duty cycle control
+- Add frequency sweeping
+
+### Communication
+- Control via network commands  
+- Save patterns to file
+- Remote control interface
+
+## Project Deliverables
+
+When you complete this project, you should have:
+
+1. **Working Blink-LED.vi** with all specified features
+2. **Clean, organized front panel** with logical control layout
+3. **Efficient block diagram** using proper structures
+4. **Documented code** with clear comments
+5. **Test results** demonstrating all functionality
+
+## Summary
+
+The Blink-LED VI project demonstrates fundamental LabVIEW concepts:
+- **User interface design** with controls and indicators
+- **Program structure** using loops and case statements  
+- **Timing control** for real-time applications
+- **State management** with shift registers
+- **User experience** considerations
+
+This project serves as an excellent template for more complex applications. The patterns you learn here—state machines, timing control, user input handling—form the foundation for professional LabVIEW development.
+
+Congratulations on building your first complete LabVIEW application! You're now ready to tackle more advanced programming challenges.
+
+---

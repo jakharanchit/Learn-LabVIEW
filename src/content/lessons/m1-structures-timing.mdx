@@ -1,0 +1,423 @@
+---
+id: m1-structures-timing
+title: Simple Timing & Program Control
+description: Learn essential timing functions and techniques to control program execution speed, create delays, and measure elapsed time in LabVIEW.
+category: Structures 101
+difficulty: beginner
+estimatedTime: 15
+quiz:
+  - question: Which function causes LabVIEW to wait a specific number of milliseconds?
+    options:
+      - Tick Count (ms)
+      - Wait Until Next ms Multiple  
+      - Wait (ms)
+      - Time Delay
+    answer: Wait (ms)
+  - question: What happens if you don't include timing functions in continuous loops?
+    options:
+      - Nothing, it works fine
+      - The loop executes slowly
+      - The loop consumes 100% CPU
+      - LabVIEW automatically adds timing
+    answer: The loop consumes 100% CPU
+---
+
+# Simple Timing & Program Control
+
+Timing control is crucial in LabVIEW programming. Without proper timing, your programs can consume excessive CPU resources, become unresponsive, or execute too fast for meaningful interaction. This lesson teaches you the essential timing functions and when to use them.
+
+## Prerequisites
+
+- Understanding of LabVIEW loops (For and While Loops)
+- Basic knowledge of block diagram programming
+
+## Learning Objectives
+
+By the end of this lesson, you will:
+- Understand why timing is essential in LabVIEW programs
+- Use basic timing functions effectively
+- Implement proper timing in loops
+- Measure elapsed time for performance analysis
+- Create timed sequences and delays
+
+## Why Timing Matters
+
+### The Problem: Runaway Loops
+
+Without timing controls, LabVIEW loops execute as fast as possible:
+
+```vhdl
+// BAD EXAMPLE - No timing
+While Loop:
+  Update display
+  Read sensor
+  Check stop condition
+// This loop will consume 100% CPU!
+```
+
+**Consequences:**
+- **100% CPU usage** - Computer becomes sluggish
+- **UI becomes unresponsive** - Hard to interact with controls
+- **Excessive power consumption** - Drains battery quickly
+- **Overheating** - CPU runs hot unnecessarily
+
+### The Solution: Controlled Timing
+
+```vhdl
+// GOOD EXAMPLE - Proper timing
+While Loop:
+  Update display
+  Read sensor  
+  Wait (ms) ← 100 ms delay
+  Check stop condition
+// Loop now executes 10 times per second
+```
+
+**Benefits:**
+- **Controlled execution rate** - Predictable performance
+- **CPU efficiency** - Allows other programs to run
+- **Responsive UI** - Controls remain interactive
+- **Power savings** - Better battery life
+
+## LabVIEW Timing Functions
+
+LabVIEW provides several timing functions in the **Programming → Timing** palette:
+
+### 1. Wait (ms) - Basic Delay
+
+**Purpose:** Pause program execution for a specified time
+
+**When to use:**
+- Adding delays between operations
+- Controlling loop execution rate
+- Creating timeouts
+
+**Example: Temperature Logger**
+```vhdl
+While Loop:
+  Read temperature sensor
+  Update chart
+  Wait (ms) ← 1000  // Wait 1 second
+  Check stop button
+// Results in 1 reading per second
+```
+
+> 💡 **Best Practice**  
+> Use 10-100 ms delays in UI loops for responsive yet efficient operation.
+
+### 2. Wait Until Next ms Multiple - Synchronized Timing
+
+**Purpose:** Wait until the system clock reaches the next multiple of a specified interval
+
+**When to use:**
+- Synchronizing multiple loops
+- Creating precise periodic timing
+- Data acquisition at specific intervals
+
+**Example: Synchronized Data Collection**
+```vhdl
+Loop 1:
+  Collect Channel 1 data
+  Wait Until Next ms Multiple ← 50
+  
+Loop 2:  
+  Collect Channel 2 data
+  Wait Until Next ms Multiple ← 50
+// Both loops execute synchronized every 50ms
+```
+
+**Key Difference from Wait (ms):**
+- **Wait (ms)**: Waits FOR a duration
+- **Wait Until Next ms Multiple**: Waits UNTIL a specific time
+
+### 3. Tick Count (ms) - Time Measurement
+
+**Purpose:** Returns the current system time in milliseconds
+
+**When to use:**
+- Measuring elapsed time
+- Creating custom timers
+- Performance profiling
+
+**Example: Execution Time Measurement**
+```vhdl
+Start Time ← Tick Count (ms)
+
+// Your code to measure here
+Process data
+Perform calculations
+
+End Time ← Tick Count (ms)
+Elapsed Time ← End Time - Start Time
+```
+
+### 4. Time Delay (Express VI) - Seconds-Based Delay
+
+**Purpose:** Wait for a specified number of seconds (Express VI version)
+
+**Configuration:** Set delay time in seconds through dialog
+
+**When to use:**
+- Simple delays in Express VI applications
+- When working primarily with Express VIs
+- Educational examples
+
+## Practical Timing Applications
+
+### Application 1: Data Acquisition Loop
+
+```vhdl
+Front Panel:
+- Sample Rate (Hz) - numeric control
+- Stop Acquisition - Boolean control
+- Data Display - waveform chart
+
+Block Diagram:
+Calculate Delay ← 1000 / Sample Rate (convert Hz to ms)
+
+While Loop:
+  Acquire Data Sample
+  Update Chart
+  Wait (ms) ← Delay
+  Stop Acquisition → Conditional Terminal
+```
+
+### Application 2: Blinking LED
+
+```vhdl
+Front Panel:
+- Blink Rate (Hz) - numeric control  
+- LED - Boolean indicator
+- Stop - Boolean control
+
+Block Diagram:
+Blink Period ← 500 / Blink Rate  // Half period for on/off
+
+While Loop:
+  LED ← TRUE
+  Wait (ms) ← Blink Period
+  LED ← FALSE  
+  Wait (ms) ← Blink Period
+  Stop → Conditional Terminal
+```
+
+### Application 3: Timeout Implementation
+
+```vhdl
+Front Panel:
+- Timeout (seconds) - numeric control
+- Process Running - Boolean indicator
+- Status - string indicator
+
+Block Diagram:
+Start Time ← Tick Count (ms)
+Timeout ms ← Timeout × 1000
+
+While Loop:
+  Current Time ← Tick Count (ms)
+  Elapsed ← Current Time - Start Time
+  
+  Case Structure (Elapsed >= Timeout ms):
+    TRUE: 
+      Status ← "Timeout occurred"
+      Process Running ← FALSE
+      TRUE → Loop Stop
+    FALSE:
+      Continue processing
+      Process Running ← TRUE
+      
+  Wait (ms) ← 10
+```
+
+## Advanced Timing Concepts
+
+### Measuring Performance
+
+Create a simple performance timer SubVI:
+
+**Timer.vi Inputs:**
+- Reset Timer (Boolean)
+
+**Timer.vi Outputs:**  
+- Elapsed Time (ms) (numeric)
+
+**Implementation:**
+```vhdl
+Case Structure (Reset Timer):
+  TRUE:
+    Start Time ← Tick Count (ms)
+    Elapsed Time ← 0
+  FALSE:
+    Current Time ← Tick Count (ms)  
+    Elapsed Time ← Current Time - Start Time
+
+Use Shift Register to store Start Time between calls
+```
+
+### Multiple Timer Management
+
+For applications needing multiple independent timers:
+
+```vhdl
+Timer Array ← Initialize Array (Number of Timers)
+
+For Loop (Number of Timers):
+  Current Timer ← Index Array (Timer Array, i)
+  
+  Case Structure (Timer Active):
+    TRUE:
+      Update elapsed time
+      Check if expired
+    FALSE:  
+      Timer remains idle
+      
+  Replace Array Element (updated timer)
+```
+
+## Common Timing Patterns
+
+### Pattern 1: The Standard UI Loop
+
+```vhdl
+// Recommended for most user interface loops
+While Loop:
+  Read user controls
+  Update calculations  
+  Update displays
+  Wait (ms) ← 50        // 20 Hz update rate
+  Check exit condition
+```
+
+### Pattern 2: High-Speed Data Collection
+
+```vhdl
+// For time-critical data acquisition
+While Loop:
+  Read sensor (fast)
+  Store in buffer
+  Wait Until Next ms Multiple ← 1  // 1 kHz
+  Check buffer full or stop
+```
+
+### Pattern 3: Background Processing
+
+```vhdl
+// For non-time-critical background tasks  
+While Loop:
+  Process data chunk
+  Update progress
+  Wait (ms) ← 200      // 5 Hz, low priority
+  Check completion
+```
+
+## Timing Best Practices
+
+### Choosing the Right Delay
+
+| Application Type | Recommended Delay | Update Rate |
+|------------------|-------------------|-------------|
+| **User Interface** | 50-100 ms | 10-20 Hz |
+| **Data Visualization** | 25-50 ms | 20-40 Hz |
+| **Control Systems** | 1-10 ms | 100-1000 Hz |
+| **Background Tasks** | 100-500 ms | 2-10 Hz |
+| **File Operations** | 10-100 ms | Variable |
+
+### Performance Guidelines
+
+**Do:**
+- ✅ Always include timing in continuous loops
+- ✅ Choose delays appropriate for your application
+- ✅ Use shift registers for time-based calculations
+- ✅ Profile performance-critical sections
+
+**Don't:**
+- ❌ Run loops without any timing (CPU hog)
+- ❌ Use extremely short delays (&lt1 ms) unnecessarily
+- ❌ Block the UI thread with long operations
+- ❌ Ignore the impact of timing on system performance
+
+## Common Timing Mistakes
+
+### Mistake 1: No Timing in Loops
+
+```vhdl
+// WRONG - Burns CPU
+While Loop:
+  Update display
+  Check buttons
+  // No timing - runs at maximum speed!
+```
+
+### Mistake 2: Inappropriate Delay Values
+
+```vhdl
+// WRONG - Too fast for UI
+While Loop:
+  Update user interface
+  Wait (ms) ← 1  // 1000 Hz is overkill for UI!
+  
+// WRONG - Too slow for control
+While Loop:
+  Read sensor for PID control
+  Wait (ms) ← 1000  // 1 Hz is too slow for control!
+```
+
+### Mistake 3: Timing in Wrong Location
+
+```vhdl
+// WRONG - Timing affects data accuracy
+While Loop:
+  Start Time ← Tick Count (ms)
+  Wait (ms) ← 100  // This affects the measurement!
+  End Time ← Tick Count (ms)
+  // Elapsed time will always be >= 100 ms
+```
+
+## Practice Exercises
+
+### Exercise 1: Stopwatch
+
+Create a simple stopwatch VI:
+- Start/Stop button (Boolean)
+- Reset button (Boolean)  
+- Elapsed Time display (numeric, in seconds)
+- Update display every 100 ms
+
+### Exercise 2: Traffic Light Simulator
+
+Build a traffic light controller:
+- Red, Yellow, Green LED indicators
+- Timing sequence: Green (5s) → Yellow (2s) → Red (5s) → repeat
+- Manual stop control
+
+### Exercise 3: Data Rate Calculator
+
+Create a VI that measures data processing rate:
+- Process data in a loop
+- Count iterations per second
+- Display current and average rates
+- Show performance statistics
+
+## Summary
+
+**Key Timing Functions:**
+- **Wait (ms)**: Basic delay for specified milliseconds
+- **Wait Until Next ms Multiple**: Synchronized timing for periodic operations
+- **Tick Count (ms)**: System time measurement for elapsed time calculations
+- **Time Delay**: Express VI for seconds-based delays
+
+**Critical Guidelines:**
+- **Always include timing** in continuous loops
+- **Choose appropriate delays** for your application type
+- **Measure performance** when timing is critical
+- **Balance responsiveness** with CPU efficiency
+
+**Typical Delays:**
+- UI loops: 50-100 ms
+- Data visualization: 25-50 ms  
+- Control systems: 1-10 ms
+- Background tasks: 100-500 ms
+
+Proper timing control transforms chaotic, CPU-hungry programs into efficient, responsive applications. Master these concepts, and your LabVIEW programs will perform beautifully while playing nicely with the rest of your system.
+
+---

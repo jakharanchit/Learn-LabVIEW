@@ -1,0 +1,72 @@
+---
+id: m2-debugging-basics-1
+title: Probes, Execution Highlighting & Breakpoints
+description: Learn essential debugging techniques to inspect dataflow, step through code, and fix broken wires.
+category: IDE Fluency
+difficulty: beginner
+estimatedTime: 15
+quiz:
+  - question: Which toolbar button highlights animated dataflow on the block diagram?
+    options:
+      - Continuous Run
+      - Execution Highlighting
+      - Abort
+      - Pause
+    answer: Execution Highlighting
+  - question: A breakpoint suspends execution when _______.
+    options:
+      - data arrives at any tunnel
+      - a node first receives all inputs
+      - the VI finishes running
+      - the user presses `Ctrl+H`
+    answer: a node first receives all inputs
+---
+
+# Probes, Execution Highlighting & Breakpoints
+
+Effective debugging is the difference between frustration and fluency in LabVIEW. This lesson shows you how **probes**, **execution highlighting**, single-step tools, and **breakpoints** reveal exactly what your code is doing so you can fix problems fast.
+
+## Introduction
+
+When a VI misbehaves the culprit is often hidden data, a missed dependency, or unexpected timing. Because LabVIEW executes by dataflow, we need *data-centric* debugging tools. Probes let you *watch wires*, highlighting animates the *flow*, and breakpoints give you precise *suspension points*.
+
+## Key Concepts
+
+- The Toolbar’s light-bulb button turns on Execution Highlighting to animate wire bubbles.
+- Probes are interactive windows that display the last value to pass through a wire.
+- Single-step buttons (Step Into ▸, Step Over ▸|, Step Out ↰) advance execution one node at a time.
+- Breakpoints pause execution automatically on wires, nodes or entire diagrams.
+- Retain Wire Values stores last data on every wire—great for post-run inspection.
+
+## Step-by-Step Walkthrough
+
+1. **Identify the suspect area** of your diagram.
+2. **Drop a Probe**
+   ```text
+   Tools ▸ Probe or right-click ▸ Probe
+   ```
+3. **Run with Highlighting** to see bubbles flow.
+4. **Single-step** when you approach the faulty node.
+5. **Add Breakpoint** on the node; rerun to suspend just before execution.
+6. Inspect probe values, change front-panel inputs, then press *Run ▶* to continue.
+
+### Example Diagram
+
+```g
++––While Loop––––––––––––––––––––––––––––+
+| Random (0–1) → *Add* → Probe ➜ Chart |
++–––––––––––––––––––––––––––––––––––––––––+
+```  
+Place a breakpoint on *Add* and observe how the chart stops updating until you resume.
+
+## Best Practices
+
+> 💡 **Breakpoint Placement**: Break on a wire, not just the node, when you need to capture post-execution values.
+
+> 🚫 **Avoid Saving Breakpoints** in production VIs—remove them before committing code.
+
+> 🏷️ **Name Probes** to describe the signal, e.g. `Filtered Temp [C]`, so the Probe Watch Window stays readable.
+
+## Summary
+
+Debugging in LabVIEW is visual. Combine probes, highlighting and breakpoints to trace values, watch timing and fix your VIs with confidence.

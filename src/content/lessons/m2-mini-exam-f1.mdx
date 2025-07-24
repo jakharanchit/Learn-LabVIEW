@@ -1,0 +1,349 @@
+---
+id: m2-mini-exam-f1
+title: Mini-Exam F1 (Quiz + Graded VI)
+description: Assessment covering LabVIEW fundamentals including IDE navigation, basic programming structures, and debugging techniques.
+category: Fundamentals Assessment
+difficulty: beginner
+estimatedTime: 25
+quiz:
+  - question: Which palette contains the While Loop structure?
+    options:
+      - Controls palette
+      - Programming→Structures
+      - Modern→Boolean
+      - Tools palette
+    answer: Programming→Structures
+  - question: What does the broken run arrow indicate?
+    options:
+      - VI is currently running
+      - VI has compilation errors
+      - VI is in debug mode
+      - VI is saved successfully
+    answer: VI has compilation errors
+---
+
+# Mini-Exam F1: Fundamentals Assessment
+
+This assessment evaluates your understanding of core LabVIEW concepts covered in the Fundamentals track. You'll complete both theoretical questions and a practical VI building exercise.
+
+## Assessment Overview
+
+**Total Time:** 25 minutes  
+**Format:** Multiple choice questions + Hands-on VI creation  
+**Passing Score:** 70% or higher  
+**Retake Policy:** Unlimited attempts with 24-hour cooldown
+
+## Part A: Theoretical Knowledge (15 questions)
+
+### Question 1
+What is the primary purpose of the front panel in a LabVIEW VI?
+
+**A)** Contains the executable source code  
+**B)** Provides the user interface for inputs and outputs  
+**C)** Displays debugging information  
+**D)** Stores VI documentation  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - The front panel serves as the user interface where users interact with controls (inputs) and view indicators (outputs).
+</details>
+
+### Question 2
+Which data type is represented by a green wire in LabVIEW?
+
+**A)** Floating-point numeric  
+**B)** Integer numeric  
+**C)** Boolean  
+**D)** String  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: C</strong> - Boolean data is represented by green wires in LabVIEW block diagrams.
+</details>
+
+### Question 3
+What determines the execution order in LabVIEW's dataflow programming model?
+
+**A)** The physical position of objects on the block diagram  
+**B)** The order in which objects were placed  
+**C)** The availability of data at input terminals  
+**D)** Alphabetical order of object names  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: C</strong> - LabVIEW uses dataflow programming where execution is determined by data availability, not physical position.
+</details>
+
+### Question 4
+How do you access context-sensitive help for a LabVIEW function?
+
+**A)** Right-click and select "Help"  
+**B)** Press F1 while the cursor is over the object  
+**C)** Use Ctrl+H and hover over the object  
+**D)** Both B and C are correct  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: D</strong> - Both F1 and the Context Help window (Ctrl+H) provide context-sensitive help.
+</details>
+
+### Question 5
+What is the difference between a Control and an Indicator?
+
+**A)** Controls are inputs, Indicators are outputs  
+**B)** Controls are for numbers, Indicators are for text  
+**C)** Controls are front panel objects, Indicators are block diagram objects  
+**D)** There is no difference  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: A</strong> - Controls provide data input from the user, while Indicators display output data to the user.
+</details>
+
+### Question 6
+Which structure executes a known number of times?
+
+**A)** While Loop  
+**B)** For Loop  
+**C)** Case Structure  
+**D)** Sequence Structure  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - For Loops execute a predetermined number of iterations specified by the count terminal.
+</details>
+
+### Question 7
+What appears when you use the Probe tool on a wire during VI execution?
+
+**A)** Wire color changes  
+**B)** A floating window showing the data value  
+**C)** The VI stops execution  
+**D)** An error dialog  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - The Probe tool displays a floating window showing the current value on the probed wire.
+</details>
+
+### Question 8
+How do you enable Execution Highlighting for debugging?
+
+**A)** Tools → Execution Highlighting  
+**B)** Click the lightbulb icon on the toolbar  
+**C)** Right-click and select "Highlight"  
+**D)** Press Ctrl+E  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - The lightbulb icon on the toolbar enables/disables Execution Highlighting.
+</details>
+
+### Question 9
+What is auto-indexing in LabVIEW loops?
+
+**A)** Automatic creation of array indices  
+**B)** Automatic creation of arrays from scalar values in loops  
+**C)** Automatic loop counting  
+**D)** Automatic error indexing  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - Auto-indexing automatically builds arrays from scalar values passed through loop boundaries.
+</details>
+
+### Question 10
+Which terminal on a While Loop determines when it stops?
+
+**A)** Iteration terminal (i)  
+**B)** Continue terminal  
+**C)** Conditional terminal  
+**D)** Count terminal  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: C</strong> - The conditional terminal determines when a While Loop stops (TRUE = stop, FALSE = continue).
+</details>
+
+### Question 11
+What does a shift register do in a loop?
+
+**A)** Shifts the loop position on the diagram  
+**B)** Stores data from previous iterations  
+**C)** Changes the loop execution order  
+**D)** Shifts array elements  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - Shift registers pass data from one loop iteration to the next, allowing access to previous values.
+</details>
+
+### Question 12
+How do you create a SubVI from existing code?
+
+**A)** Copy and paste the code into a new VI  
+**B)** Select the code and choose "Create SubVI" from Edit menu  
+**C)** Save the code as a separate file  
+**D)** Use the SubVI wizard  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - Select the desired code and use Edit → Create SubVI to automatically create a SubVI.
+</details>
+
+### Question 13
+What information does the Error List window provide?
+
+**A)** Runtime errors only  
+**B)** Syntax errors only  
+**C)** Both compilation and runtime errors  
+**D)** Warning messages only  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: C</strong> - The Error List shows all types of errors that prevent VI compilation or cause runtime issues.
+</details>
+
+### Question 14
+Which tool is used to select and move objects on the block diagram?
+
+**A)** Operating tool  
+**B)** Positioning tool  
+**C)** Labeling tool  
+**D)** Wiring tool  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - The Positioning tool (arrow cursor) is used to select, move, and resize objects.
+</details>
+
+### Question 15
+What does the connector pane define for a VI?
+
+**A)** The VI's icon appearance  
+**B)** The VI's input and output parameters when used as a SubVI  
+**C)** The VI's execution priority  
+**D)** The VI's save location  
+
+<details>
+<summary>Click to reveal answer</summary>
+<strong>Answer: B</strong> - The connector pane defines the input and output terminals for using the VI as a SubVI.
+</details>
+
+## Part B: Practical Exercise (Graded VI)
+
+### Exercise: Temperature Monitor VI
+
+**Objective:** Create a VI that simulates temperature monitoring with user controls and visual feedback.
+
+**Requirements:**
+
+1. **Front Panel Design:**
+   - One numeric control labeled "Target Temperature (°C)" (range: 0-100)
+   - One Boolean indicator labeled "Temperature Alert" 
+   - One waveform chart labeled "Temperature History"
+   - One stop button
+
+2. **Block Diagram Logic:**
+   - Use a While Loop for continuous operation
+   - Generate random temperature values between 15-35°C
+   - Compare current temperature with target temperature
+   - Light the alert indicator when temperature exceeds target by >5°C
+   - Plot temperature values on the chart
+   - Include proper timing (500ms delay per iteration)
+   - Implement clean stop functionality
+
+3. **Code Quality:**
+   - Use proper wiring techniques (minimal bends)
+   - Include appropriate comments
+   - Follow LabVIEW style guidelines
+   - Ensure error-free compilation
+
+### Grading Rubric
+
+**Functionality (60 points)**
+- [ ] VI compiles without errors (10 pts)
+- [ ] While Loop operates correctly (10 pts)
+- [ ] Random number generation works (10 pts)
+- [ ] Temperature comparison logic functions (10 pts)
+- [ ] Chart displays data properly (10 pts)
+- [ ] Stop functionality works correctly (10 pts)
+
+**Code Quality (25 points)**
+- [ ] Clean wiring and layout (10 pts)
+- [ ] Proper object naming (5 pts)
+- [ ] Appropriate comments (5 pts)
+- [ ] Follows style guidelines (5 pts)
+
+**Front Panel Design (15 points)**
+- [ ] All required controls present (8 pts)
+- [ ] Professional appearance (4 pts)
+- [ ] Logical layout (3 pts)
+
+### Implementation Guide
+
+1. **Start with the Front Panel:**
+   ```
+   Create: Numeric Control → "Target Temperature (°C)"
+   Create: Boolean Indicator → "Temperature Alert"
+   Create: Waveform Chart → "Temperature History"
+   Create: Stop Button
+   ```
+
+2. **Build the Block Diagram:**
+   ```
+   Add: While Loop
+   Add: Random Number generator (0,1)
+   Add: Scale to 15-35 range: Random * 20 + 15
+   Add: Comparison logic for alert
+   Add: Timing function (Wait 500ms)
+   ```
+
+3. **Wire Everything Together:**
+   - Connect random temperature to chart
+   - Wire comparison result to alert indicator
+   - Include stop button in While Loop condition
+   - Add appropriate timing
+
+### Submission Instructions
+
+1. Save your VI as "YourName_TempMonitor.vi"
+2. Test the VI thoroughly before submission
+3. Ensure the VI runs without errors
+4. Include a brief comment describing your approach
+
+### Common Pitfalls to Avoid
+
+- **Forgetting the stop condition** - Always include a way to stop While Loops
+- **Missing timing** - Include Wait functions to prevent excessive CPU usage
+- **Broken wires** - Ensure all connections are properly made
+- **Incorrect data types** - Match wire colors and types appropriately
+
+## Assessment Summary
+
+This assessment covers:
+
+✅ **LabVIEW Environment** - IDE navigation and tool usage  
+✅ **Basic Programming** - Controls, indicators, and structures  
+✅ **Dataflow Concepts** - Understanding LabVIEW's execution model  
+✅ **Debugging Skills** - Using built-in debugging tools  
+✅ **Practical Application** - Building a functional VI from requirements  
+
+### Next Steps
+
+**If you pass:** Congratulations! You're ready to advance to the Practitioner track.
+
+**If you need to retake:** Review the fundamentals lessons, practice with the example VIs, and focus on areas where you scored lowest.
+
+**Additional Practice:** Try building variations of the temperature monitor with different sensors, thresholds, or display methods.
+
+---
+
+## Final Tips
+
+- **Take your time** - Rushing leads to simple mistakes
+- **Test frequently** - Run your VI often during development
+- **Use help resources** - Context help is your friend
+- **Follow best practices** - Clean code is easier to debug
+
+Good luck with your assessment!

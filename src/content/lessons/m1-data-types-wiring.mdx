@@ -1,0 +1,268 @@
+---
+id: m1-data-types-wiring
+title: LabVIEW Data Types & Wiring Basics
+description: Learn about LabVIEW's fundamental data types including numerics, Booleans, strings, and understand the basics of wiring in the block diagram.
+category: Data Types & Wiring
+difficulty: beginner
+estimatedTime: 18
+quiz:
+  - question: What color represents Boolean data in LabVIEW wires?
+    options:
+      - Orange
+      - Blue 
+      - Green
+      - Pink
+    answer: Green
+  - question: Which data type uses a pink wire in LabVIEW?
+    options:
+      - Numeric
+      - Boolean
+      - String
+      - Cluster
+    answer: String
+---
+
+# LabVIEW Data Types & Wiring Basics
+
+Understanding data types and wiring is fundamental to becoming proficient in LabVIEW programming. This lesson covers the essential data types and teaches you how to connect them properly using wires.
+
+## Prerequisites
+
+- Completed "Touring the LabVIEW IDE"
+- Basic understanding of front panel controls and indicators
+
+## Learning Objectives
+
+By the end of this lesson, you will be able to:
+- Identify the four basic LabVIEW data types
+- Recognize wire colors and their corresponding data types
+- Wire controls and indicators correctly in block diagrams
+- Understand the concept of data flow programming
+- Troubleshoot broken wires
+
+## LabVIEW's Basic Data Types
+
+LabVIEW has four fundamental data types that you'll use constantly:
+
+### 1. Numeric Data Types
+
+Numeric data represents numbers and comes in several varieties:
+
+**Floating-Point Numbers:**
+- **Double (DBL)** - 64-bit floating point (most common)
+- **Single (SGL)** - 32-bit floating point
+- **Extended** - 80-bit floating point (Windows only)
+
+**Integer Numbers:**
+- **I32** - 32-bit signed integer
+- **I16** - 16-bit signed integer  
+- **I8** - 8-bit signed integer
+- **U32, U16, U8** - Unsigned integer variants
+
+> 💡 **Tip**  
+> Use DBL (double-precision floating point) for most applications unless you have specific memory or precision requirements.
+
+### 2. Boolean Data Type
+
+Boolean data represents TRUE/FALSE or ON/OFF states:
+- **TRUE** = Green LED on, switch up position
+- **FALSE** = Gray LED off, switch down position
+
+Common Boolean controls:
+- Push buttons
+- Toggle switches  
+- Stop buttons
+- LEDs (indicators)
+
+### 3. String Data Type
+
+Strings represent text data:
+- ASCII characters
+- Unicode support
+- Used for file paths, instrument commands, user messages
+- Can include special characters like line feeds (\n)
+
+### 4. Path Data Type
+
+Paths represent file and directory locations:
+- Platform-independent file references
+- Automatically handles different OS path formats
+- Used with File I/O operations
+
+## Wire Colors and Data Flow
+
+LabVIEW uses different wire colors and styles to represent data types visually:
+
+| Data Type | Wire Color | Wire Style | Example Use |
+|-----------|------------|------------|-------------|
+| **Floating-Point** | Orange | Solid line | Temperature readings |
+| **Integer** | Blue | Solid line | Loop counts, array indices |
+| **Boolean** | Green | Solid line | Switch states, conditions |
+| **String** | Pink | Solid line | File names, messages |
+| **Path** | Green | Solid line | File locations |
+| **Cluster** | Pink/Brown | Thick line | Error clusters, data groups |
+| **Array** | Varies | Thick line with pattern | Multiple data points |
+
+> ✅ **Best Practice**  
+> Always match wire colors when connecting terminals - this prevents data type conflicts!
+
+## Understanding Wires
+
+Wires are the "data highways" in LabVIEW that carry information between:
+- **Source terminals** → **Destination terminals**
+- **Controls** → **Functions** → **Indicators**
+
+### Wire Rules
+
+1. **One Source Rule**: Each wire can have only ONE data source
+2. **Multiple Destinations**: Wires can branch to multiple destinations
+3. **Data Flow**: Data flows immediately from source to destination
+4. **Type Matching**: Source and destination must have compatible data types
+
+### Good Wiring vs. Bad Wiring
+
+**Good Wiring:**
+```
+Control → Function → Indicator
+  (1 source)  (multiple destinations OK)
+```
+
+**Bad Wiring:**
+```
+Control ↘
+         → Function (BROKEN - multiple sources)
+Control ↗
+```
+
+## Broken Wires - Troubleshooting
+
+When you see a dashed red line, you have a broken wire. Common causes:
+
+1. **Data Type Mismatch**
+   - Orange numeric wire to green Boolean terminal
+   - Solution: Use conversion functions or check your connections
+
+2. **Multiple Sources**
+   - Two or more controls wired to the same input
+   - Solution: Remove extra connections or use a selection function
+
+3. **No Source**
+   - Terminal expecting data but nothing wired to it
+   - Solution: Wire a control or constant to the input
+
+4. **Missing Required Input**
+   - Function needs input but none provided
+   - Solution: Wire all required inputs (solid terminals)
+
+> 🚨 **Watch Out!**  
+> A VI with broken wires cannot run. The Run button will appear as a broken arrow when wires are broken.
+
+## Data Flow Programming Principles
+
+LabVIEW follows **dataflow programming**, which means:
+
+1. **Execution Order**: Functions execute when ALL input data is available
+2. **No Timing Dependencies**: Order depends on data dependencies, not position
+3. **Parallel Execution**: Independent operations can happen simultaneously
+4. **Immediate Data Transfer**: Data moves instantly from output to input
+
+### Example: Simple Addition
+
+```
+Numeric Control A ──┐
+                    ├─→ Add Function ──→ Sum Indicator
+Numeric Control B ──┘
+```
+
+The Add function waits until BOTH inputs have data, then executes and immediately sends the result to the indicator.
+
+## Working with Constants
+
+Sometimes you need fixed values in your code. LabVIEW provides **constants**:
+
+1. **Right-click** on a function terminal
+2. Select **Create Constant**
+3. The constant appears with the correct data type
+4. Double-click to edit the value
+
+## Automatic Type Conversion
+
+LabVIEW automatically converts between compatible types:
+- **Coercion dots** (gray dots) appear when conversion happens
+- Usually harmless, but can indicate design issues
+- Example: Wiring I32 integer to DBL floating-point input
+
+## Practice Exercise: Temperature Converter
+
+Build a VI that converts Celsius to Fahrenheit:
+
+**Front Panel:**
+- Celsius input (numeric control)
+- Fahrenheit output (numeric indicator)
+
+**Block Diagram:**
+1. Multiply Celsius by 9
+2. Divide result by 5  
+3. Add 32
+4. Wire to Fahrenheit indicator
+
+**Formula:** F = (C × 9/5) + 32
+
+## Wiring Best Practices
+
+1. **Keep it clean**: Avoid wire crossing when possible
+2. **Use right angles**: LabVIEW auto-routes wires at 90-degree angles
+3. **Group related wires**: Keep data flowing left-to-right
+4. **Label complex wires**: Use wire labels for clarity
+5. **Break up complex diagrams**: Use subVIs for modularity
+
+## Common Wiring Mistakes
+
+❌ **Wrong data type connections**
+❌ **Multiple sources to one input**  
+❌ **Forgetting required inputs**
+❌ **Crossing wires unnecessarily**
+❌ **Not using appropriate constants**
+
+✅ **Match data types carefully**
+✅ **One source per wire segment**
+✅ **Wire all required inputs**
+✅ **Keep clean, readable layout**
+✅ **Use constants for fixed values**
+
+## Try It Out
+
+### Basic Wiring Exercise
+
+1. Create a new VI
+2. Add two numeric controls (A and B)
+3. Add one numeric indicator (Result)
+4. On the block diagram:
+   - Wire A to top input of Add function
+   - Wire B to bottom input of Add function  
+   - Wire Add output to Result indicator
+5. Run the VI and test with different values
+
+### Data Type Practice
+
+1. Create controls for each data type:
+   - Numeric (DBL)
+   - Boolean (switch)
+   - String (text control)
+2. Add corresponding indicators
+3. Wire each control to its indicator
+4. Observe the different wire colors
+5. Run the VI and change values
+
+## Summary
+
+- **Four basic data types**: Numeric, Boolean, String, Path
+- **Wire colors indicate data types**: Orange=numeric, Green=Boolean, Pink=string
+- **Dataflow programming**: Execution depends on data availability
+- **One source per wire**: Multiple destinations are OK
+- **Broken wires**: Usually caused by type mismatches or wiring errors
+- **Constants**: Fixed values created from terminal right-click menus
+
+Understanding these fundamentals sets the foundation for all LabVIEW programming. The next lesson will dive deeper into programming structures that control execution flow.
+
+---

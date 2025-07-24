@@ -1,0 +1,511 @@
+---
+id: m3-file-io-basics
+title: File I/O Basics – TDMS, CSV, INI
+description: Learn essential file input/output operations in LabVIEW, including TDMS technical data management, CSV spreadsheet files, and INI configuration files.
+category: File I/O & Strings
+difficulty: intermediate
+estimatedTime: 20
+quiz:
+  - question: Which file format is specifically designed for technical data in LabVIEW?
+    options:
+      - CSV
+      - TXT
+      - TDMS
+      - INI
+    answer: TDMS
+  - question: What is the main advantage of TDMS files over CSV files?
+    options:
+      - Smaller file size
+      - Human readable format
+      - Built-in metadata and high-speed streaming
+      - Compatible with all software
+    answer: Built-in metadata and high-speed streaming
+---
+
+# File I/O Basics – TDMS, CSV, INI
+
+Master LabVIEW's file input/output capabilities to save, load, and manage your measurement data and application configurations.
+
+## Learning Objectives
+
+After completing this lesson, you will be able to:
+- Understand different file formats and their appropriate use cases
+- Work with TDMS files for technical data management
+- Handle CSV files for spreadsheet compatibility
+- Manage INI files for application configuration
+- Implement proper file error handling
+- Choose the right file format for your application
+
+---
+
+## File Format Overview
+
+LabVIEW supports multiple file formats, each optimized for different purposes:
+
+| Format | Purpose | Advantages | Disadvantages |
+|--------|---------|------------|---------------|
+| **TDMS** | Technical data | Fast, metadata, streaming | LabVIEW-specific |
+| **CSV** | Spreadsheet data | Universal, human-readable | No metadata, slower |
+| **TXT** | Text data | Simple, universal | Manual parsing needed |
+| **INI** | Configuration | Structured, standard | Text-based only |
+| **Binary** | Raw data | Compact, fast | Not human-readable |
+
+> 💡 **Choosing the Right Format**  
+> **TDMS** for measurement data, **CSV** for Excel compatibility, **INI** for settings, **TXT** for logs
+
+## TDMS Files: Technical Data Management Streaming
+
+TDMS (Technical Data Management Streaming) is LabVIEW's high-performance binary file format designed for measurement data.
+
+### TDMS Structure
+
+TDMS files are organized hierarchically:
+
+```
+File Level (metadata about entire file)
+├── Group 1 (channel groupings)
+│   ├── Channel 1.1 (actual data + metadata)
+│   └── Channel 1.2
+└── Group 2
+    ├── Channel 2.1
+    └── Channel 2.2
+```
+
+### Writing TDMS Files
+
+#### Basic Write Operation
+
+```g
+// Simple TDMS write
+Data Array → TDMS Write
+File Path ↗
+```
+
+#### Complete Write Pattern
+
+```g
+// Professional TDMS logging
+TDMS Open → TDMS Write → TDMS Close
+    ↑           ↑           ↑
+File Path   Data Array   File Reference
+           Channel Info
+```
+
+### TDMS Channel Configuration
+
+```g
+// Channel properties
+Channel Name → "Temperature"
+Group Name → "Sensors"
+Units → "°C"
+Description → "Ambient temperature sensor"
+```
+
+### Reading TDMS Files
+
+#### Read All Data
+
+```g
+// Read entire TDMS file
+File Path → TDMS Read → Data
+                    → Channel Names
+                    → Properties
+```
+
+#### Selective Channel Reading
+
+```g
+// Read specific channels
+File Path → TDMS Read (configured) → Filtered Data
+Channel List ↗
+```
+
+### TDMS Properties and Metadata
+
+Add custom properties to enhance data documentation:
+
+```g
+// File properties
+Property Value → TDMS Set Properties
+Property Name ("Test_Date") ↗
+File Reference ↗
+
+// Channel properties  
+Property Value → TDMS Set Properties
+Property Name ("Calibration_Date") ↗
+Channel Reference ↗
+```
+
+## CSV Files: Spreadsheet Compatibility
+
+CSV (Comma-Separated Values) files provide universal compatibility with spreadsheet applications.
+
+### Writing CSV Files
+
+#### Array to Spreadsheet
+
+```g
+// Basic CSV write
+2D Array → Write To Spreadsheet File
+File Path ↗
+Delimiter ("\t" or ",") ↗
+```
+
+#### Formatted CSV Writing
+
+```g
+// Enhanced CSV with headers
+Header Array → Array to Spreadsheet String → Write Text File
+Data Array ↗    Delimiter (",") ↗              File Path ↗
+```
+
+### Reading CSV Files
+
+#### Spreadsheet to Array
+
+```g
+// Basic CSV read
+File Path → Read From Spreadsheet File → 2D Array
+Delimiter (",") ↗                       → Headers (if present)
+```
+
+#### Robust CSV Parsing
+
+```g
+// Error-handled CSV read
+File Path → Read From Spreadsheet File → 2D Array
+         → Simple Error Handler → Error Out
+```
+
+### CSV Data Formatting
+
+#### Numeric Precision Control
+
+```g
+// Format numbers for CSV
+Numeric Array → Format Into String → Formatted Array
+Format String ("%.3f") ↗
+```
+
+#### Mixed Data Types
+
+```g
+// Combine different data types
+Numeric Array → Number to String → Build Array → CSV Write
+String Array ↗                   ↗
+Boolean Array → Boolean to String ↗
+```
+
+## INI Files: Configuration Management
+
+INI files store application settings in a structured, human-readable format.
+
+### INI File Structure
+
+```ini
+[Database]
+server=localhost
+port=3306
+username=admin
+
+[Display]
+theme=dark
+refresh_rate=30
+show_toolbar=true
+
+[Logging]
+log_level=info
+max_file_size=10MB
+```
+
+### Writing INI Files
+
+#### Write Key Value
+
+```g
+// Write single setting
+Value → Write Key (String)
+Key Name ("server") ↗
+Section ("Database") ↗
+File Path ↗
+```
+
+#### Write Multiple Settings
+
+```g
+// Write section of settings
+Settings Array → For Loop {
+    Array Element → Write Key (String)
+    Key Names[i] ↗
+    Section ↗
+    File Path ↗
+}
+```
+
+### Reading INI Files
+
+#### Read Key Value
+
+```g
+// Read single setting
+Key Name → Read Key (String) → Value
+Section ↗                    → Error
+File Path ↗
+Default Value ↗
+```
+
+#### Read Entire Section
+
+```g
+// Read all keys in section
+Section Name → Read Section Names → Key Array
+File Path ↗                      → Values Array
+```
+
+### Configuration Management Pattern
+
+Create a comprehensive configuration system:
+
+```g
+// Config VI structure
+typedef Cluster {
+    Server Settings
+    Display Settings  
+    User Preferences
+}
+
+// Load Config
+Config File Path → Read INI Section → Parse to Cluster → Config Data
+
+// Save Config  
+Config Data → Cluster to INI → Write INI File
+```
+
+## File Path Management
+
+### Path Building
+
+```g
+// Cross-platform path construction
+Application Directory → Build Path → Complete Path
+Subfolder ("data") ↗
+Filename ("results.tdms") ↗
+```
+
+### Default Paths
+
+```g
+// Use system default locations
+Get System Directory (Desktop) → Build Path → File Path
+Filename ↗
+```
+
+### Path Validation
+
+```g
+// Check if file exists
+File Path → File/Directory Exists? → Boolean Result
+         → Path Type (File/Directory) → Path Info
+```
+
+## Error Handling in File Operations
+
+### Basic Error Pattern
+
+```g
+// Standard error propagation
+Previous Error → File Operation → Next Error
+               Input Data ↗      Output Data ↗
+```
+
+### Comprehensive Error Handling
+
+```g
+// Robust file operations
+Try {
+    File Operation
+} Catch {
+    Log Error → User Dialog → Default Action
+}
+```
+
+### File Lock Detection
+
+```g
+// Handle file access issues
+File Path → Open File → Check Error Code
+         → If (Error = File Locked) {
+             Retry Loop or User Prompt
+           }
+```
+
+## Practical Example: Data Logger
+
+Let's build a complete data logging system:
+
+### System Requirements
+- Real-time data acquisition
+- TDMS logging for analysis
+- CSV export for reports
+- INI configuration for settings
+
+### Implementation
+
+```g
+// Main logging loop
+While Loop {
+    // Acquire data
+    DAQ Read → Current Data
+    
+    // Log to TDMS (high-speed)
+    Current Data → TDMS Write (Append)
+    
+    // Periodic CSV export
+    If (Export Timer Elapsed) {
+        TDMS Read → CSV Write
+    }
+    
+    // Update display
+    Current Data → Chart Update
+}
+```
+
+### Configuration Setup
+
+```ini
+[Logging]
+sample_rate=1000
+channels=4
+buffer_size=10000
+auto_export=true
+export_interval=300
+
+[Files]
+data_directory=C:\Data
+filename_prefix=Test_
+tdms_enabled=true
+csv_enabled=false
+```
+
+## File Performance Optimization
+
+### Streaming vs. Batch Writing
+
+**Streaming (Real-time):**
+```g
+// High-speed continuous writing
+TDMS Open → While Loop {
+    Data → TDMS Write (Append)
+} → TDMS Close
+```
+
+**Batch (Accumulated):**
+```g
+// Periodic large writes
+Accumulate Data → When Full → File Write
+```
+
+### Buffer Management
+
+```g
+// Buffered file operations
+Data → Build Array (Buffer) → When Buffer Full {
+    Buffer → File Write → Clear Buffer
+}
+```
+
+### Memory Considerations
+
+- **TDMS:** Efficient streaming, minimal memory usage
+- **CSV:** Higher memory for large arrays
+- **INI:** Suitable for small configuration data
+
+## File Format Comparison Example
+
+Demonstrate different formats with the same data:
+
+### Source Data
+```g
+// Test data structure
+Timestamp Array (1000 points)
+Temperature Array (1000 points)  
+Humidity Array (1000 points)
+```
+
+### TDMS Version
+```g
+// Rich metadata, fast access
+Properties: Sample Rate, Units, Calibration
+Groups: Environmental Sensors
+Channels: Temperature, Humidity
+```
+
+### CSV Version
+```g
+// Spreadsheet compatible
+"Time","Temperature (°C)","Humidity (%)"
+"0.000","23.5","45.2"
+"0.001","23.6","45.1"
+```
+
+### Performance Comparison
+- **Write Speed:** TDMS > Binary > CSV > TXT
+- **File Size:** Binary < TDMS < CSV < TXT
+- **Compatibility:** TXT > CSV > TDMS > Binary
+
+## Best Practices
+
+### File Naming Conventions
+```g
+// Structured filename generation
+Current Date/Time → Format String → Filename
+Test Parameters ↗   ("Test_%s_%s.tdms") ↗
+```
+
+### Data Validation
+```g
+// Verify data before writing
+Data Array → Validate Range → File Write
+          → Check for NaN ↗
+          → Error Handling ↗
+```
+
+### Backup Strategies
+```g
+// Implement file backup
+Original File → Copy File → Backup Location
+If (Write Error) → Restore from Backup
+```
+
+---
+
+## Key Takeaways
+
+- **TDMS** provides the best performance and metadata for technical data
+- **CSV** offers universal compatibility but lacks metadata
+- **INI** files are perfect for application configuration storage
+- Always implement proper error handling for file operations
+- Choose file formats based on performance needs and compatibility requirements
+
+---
+
+## Practice Exercises
+
+1. **Multi-Format Logger:** Create a data acquisition system that simultaneously saves to TDMS and exports periodic CSV summaries.
+
+2. **Configuration Manager:** Build a settings manager using INI files with default values, validation, and backup/restore functionality.
+
+3. **File Converter:** Develop a utility that converts between TDMS, CSV, and other formats while preserving as much metadata as possible.
+
+---
+
+## Summary
+
+In this lesson, you've mastered LabVIEW's essential file I/O operations:
+
+• Learned TDMS files for high-performance technical data storage  
+• Implemented CSV files for spreadsheet compatibility  
+• Managed INI files for application configuration  
+• Applied proper error handling and path management  
+
+Up next → **Lesson 18: String Handling & Parsing** – where you'll master text processing and data extraction techniques.

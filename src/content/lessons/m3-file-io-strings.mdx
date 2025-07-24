@@ -1,0 +1,480 @@
+---
+id: m3-file-io-strings
+title: String Handling & Parsing
+description: Master LabVIEW's powerful string manipulation and parsing capabilities, including regular expressions, tokenization, and data extraction from text.
+category: File I/O & Strings
+difficulty: intermediate
+estimatedTime: 22
+quiz:
+  - question: Which LabVIEW function is best for splitting a string into multiple parts based on a delimiter?
+    options:
+      - String Subset
+      - String Replace
+      - Spreadsheet String to Array
+      - String Length
+    answer: Spreadsheet String to Array
+  - question: What does the regular expression pattern "\\d+" match?
+    options:
+      - Any single digit
+      - One or more digits
+      - Any character except digits
+      - Exactly one digit
+    answer: One or more digits
+---
+
+# String Handling & Parsing
+
+Master LabVIEW's powerful string manipulation capabilities to extract, format, and process text data from files, instruments, and user input.
+
+## Learning Objectives
+
+After completing this lesson, you will be able to:
+- Manipulate strings using LabVIEW's string functions
+- Parse delimited data and extract meaningful information
+- Use regular expressions for advanced pattern matching
+- Format strings for display and file output
+- Handle text-based instrument communication
+- Build robust string processing applications
+
+---
+
+## String Fundamentals
+
+### String Data Type
+
+Strings in LabVIEW are sequences of characters displayed with a **pink** wire color.
+
+```g
+// String constant
+"Hello, LabVIEW!" → String Indicator
+```
+
+### String Display Modes
+
+| Mode | Purpose | Escape Sequences |
+|------|---------|-----------------|
+| **Normal** | Standard text | Limited |
+| **'\\' Codes** | Escape sequences | \\n, \\t, \\r, \\\\ |
+| **Password** | Hidden input | Masked display |
+| **Hex** | Binary data | Hexadecimal view |
+
+> 💡 **Display Mode Access**  
+> Right-click string control/indicator → Display Format
+
+### Common Escape Sequences
+
+```g
+"\\n"     // Newline (line feed)
+"\\r"     // Carriage return  
+"\\t"     // Tab character
+"\\\\"    // Backslash literal
+"\\"      // Quote literal
+```
+
+## Basic String Operations
+
+### String Length
+
+```g
+// Get string character count
+Input String → String Length → Length (I32)
+```
+
+### String Concatenation
+
+```g
+// Join multiple strings
+String 1 → Concatenate Strings → Combined String
+String 2 ↗
+String 3 ↗
+```
+
+### String Subset
+
+```g
+// Extract portion of string
+Source String → String Subset → Extracted Text
+Offset (start position) ↗
+Length (characters) ↗
+```
+
+### String Replace
+
+```g
+// Find and replace text
+Source String → Replace String → Modified String
+Search String ↗              → Replace Count
+Replace String ↗
+```
+
+## String Comparison and Searching
+
+### String Comparison
+
+```g
+// Case-sensitive comparison
+String 1 → Equal? → Boolean Result
+String 2 ↗
+
+// Case-insensitive comparison  
+String 1 → To Upper Case → Equal? → Boolean Result
+String 2 → To Upper Case ↗
+```
+
+### Search and Match
+
+```g
+// Find substring position
+Source String → Search String → Offset Found
+Search Pattern ↗             → Found Boolean
+Start Offset ↗
+```
+
+### Match Pattern (Regular Expressions)
+
+```g
+// Advanced pattern matching
+Input String → Match Pattern → Match String
+RegEx Pattern ↗             → After Match
+                           → Match Valid?
+```
+
+## Data Parsing Techniques
+
+### Delimited Data Parsing
+
+#### Spreadsheet String to Array
+
+```g
+// Parse CSV or tab-delimited data
+"A,B,C\\nD,E,F" → Spreadsheet String to Array → 2D String Array
+Delimiter (",") ↗                              [["A","B","C"],
+                                               ["D","E","F"]]
+```
+
+#### Token-Based Parsing
+
+```g
+// Split by multiple delimiters
+"Name:John;Age:30;City:NYC" → For Loop {
+    String Subset → Search String (":") → Extract Value
+}
+```
+
+### Instrument Response Parsing
+
+Many instruments return formatted strings that require parsing:
+
+```g
+// Example: "VOLT +1.2345E+00"
+Instrument Response → Match Pattern → Numeric Value
+Pattern: "VOLT ([+-]?\\d+\\.\\d+E[+-]\\d+)" ↗
+```
+
+### Log File Parsing
+
+```g
+// Parse timestamp and message
+"2024-01-15 14:30:25 ERROR: Connection failed"
+    ↓
+Match Pattern → Extract Components
+Pattern: "([\\d-]+) ([\\d:]+) (\\w+): (.*)"
+    ↓
+[Date, Time, Level, Message]
+```
+
+## Regular Expressions in LabVIEW
+
+Regular expressions provide powerful pattern matching capabilities.
+
+### Basic Pattern Elements
+
+| Pattern | Matches | Example |
+|---------|---------|---------|
+| `\\d` | Any digit | "123" |
+| `\\w` | Word character | "Test_1" |
+| `\\s` | Whitespace | " \\t\\n" |
+| `.` | Any character | "a1@" |
+| `^` | Start of string | "^Hello" |
+| `$` | End of string | "end$" |
+
+### Quantifiers
+
+| Pattern | Meaning | Example |
+|---------|---------|---------|
+| `+` | One or more | "\\d+" matches "123" |
+| `*` | Zero or more | "\\w*" matches "" or "test" |
+| `?` | Zero or one | "colou?r" matches "color" or "colour" |
+| `{n}` | Exactly n | "\\d{4}" matches "2024" |
+| `{n,m}` | Between n and m | "\\d{2,4}" matches "12" or "1234" |
+
+### Character Classes
+
+```regex
+[abc]      // Match a, b, or c
+[a-z]      // Match any lowercase letter  
+[A-Z]      // Match any uppercase letter
+[0-9]      // Match any digit (same as \\d)
+[^abc]     // Match anything except a, b, or c
+```
+
+### Practical RegEx Examples
+
+#### Email Validation
+```g
+Pattern: "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"
+Matches: "user@example.com"
+```
+
+#### IP Address Extraction
+```g
+Pattern: "\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b"
+Matches: "192.168.1.1"
+```
+
+#### Scientific Notation
+```g
+Pattern: "[+-]?\\d+\\.?\\d*[eE][+-]?\\d+"
+Matches: "1.23E-4", "-5.67e+10"
+```
+
+## Advanced String Processing
+
+### String Formatting
+
+#### Format Into String
+
+```g
+// C-style formatting
+Format String → Format Into String → Formatted Output
+("%d items cost $%.2f") ↗
+Numeric Values ↗
+```
+
+#### Number to String Conversion
+
+```g
+// Precise numeric formatting
+Numeric Value → Format & Append → String Output
+Format Specification ("%.3f") ↗
+```
+
+### String Building
+
+#### Build Array of Strings
+
+```g
+// Combine multiple string operations
+String 1 → Build Array → String Array → Join Strings → Result
+String 2 ↗           Separator ("\\n") ↗
+String 3 ↗
+```
+
+#### Template-Based Generation
+
+```g
+// Dynamic string generation
+Template → Replace Multiple → Final String
+"Hello {name}, you have {count} messages"
+    ↓
+Replace {name} with "John" → Replace {count} with "5"
+    ↓
+"Hello John, you have 5 messages"
+```
+
+## Practical Parsing Examples
+
+### Configuration File Parser
+
+Parse simple configuration files:
+
+```g
+// Input: "server=localhost\\nport=8080\\nenabled=true"
+Config Text → Split String (by "\\n") → For Each Line {
+    Line → Split String (by "=") → [Key, Value]
+    Key → Trim Whitespace → Clean Key
+    Value → Parse to Appropriate Type → Config Value
+}
+```
+
+### CSV Data Processor
+
+Handle CSV files with embedded commas and quotes:
+
+```g
+// Handle: "Name","Description","Price"
+//         "Product A","High quality, durable","$29.99"
+CSV Line → Match Pattern → Extract Fields
+Pattern: '"([^"]*)"(?:,|$)'
+```
+
+### Instrument Command Builder
+
+Build SCPI commands dynamically:
+
+```g
+// Build: "MEAS:VOLT:DC? (@101:110)"
+Command Template → Format Into String → SCPI Command
+"MEAS:%s:DC? (@%d:%d)" ↗
+[Function, Start_Ch, End_Ch] ↗
+```
+
+## Error Handling in String Operations
+
+### Robust Parsing Pattern
+
+```g
+// Safe string parsing
+Input String → Validate Format → If Valid {
+    Parse Data → Extract Values
+} Else {
+    Default Values → Error Message
+}
+```
+
+### Empty String Checks
+
+```g
+// Prevent empty string errors
+Input String → String Length → If (Length > 0) {
+    Process String
+} Else {
+    Handle Empty Case
+}
+```
+
+### Encoding Issues
+
+```g
+// Handle different text encodings
+File Path → Read Text File → Check Encoding → Convert if Needed
+Encoding ("UTF-8") ↗
+```
+
+## String Performance Optimization
+
+### Efficient String Building
+
+```g
+// Poor performance (repeated concatenation)
+❌ For Loop {
+    Result = Result + New String
+}
+
+// Good performance (array then join)
+✅ For Loop {
+    String Array[i] = New String
+} → Join Strings → Result
+```
+
+### Memory Management
+
+```g
+// Pre-allocate for known sizes
+Initialize String (estimated size) → Build incrementally
+```
+
+### Regular Expression Compilation
+
+```g
+// Compile patterns once for repeated use
+Compile Pattern → Store Reference → Use Multiple Times
+```
+
+## String Debugging Techniques
+
+### Visible Whitespace
+
+```g
+// Convert invisible characters to visible
+Input String → Replace String → Debug String
+"\\n" → "\\\\n" ↗
+"\\t" → "\\\\t" ↗
+```
+
+### String Probe Display
+
+Configure string probes to show:
+- Full string content
+- String length
+- Character codes
+- Escape sequences
+
+## Practical Application: Log File Analyzer
+
+Build a comprehensive log analysis tool:
+
+### Requirements
+- Parse multiple log formats
+- Extract timestamps, severity levels, and messages
+- Filter by date range and severity
+- Generate summary statistics
+
+### Implementation Structure
+
+```g
+// Main analysis workflow
+Log File Path → Read Text File → Split by Lines → For Each Line {
+    
+    // Parse line format
+    Line → Match Pattern → Extract Components
+    Pattern: "(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) (\\w+): (.*)"
+    
+    // Validate and convert
+    Date String → Parse Date → Date Value
+    Time String → Parse Time → Time Value  
+    Level String → Map to Enum → Severity Level
+    Message String → Clean Text → Log Message
+    
+    // Filter and accumulate
+    If (Date in Range AND Level >= Min_Severity) {
+        Add to Results Array
+        Update Statistics
+    }
+}
+
+// Generate report
+Results Array → Format Report → Display/Save
+```
+
+### Regular Expression Patterns
+
+```g
+// Common log formats
+Apache: '^(\\S+) \\S+ \\S+ \\[(.*?)\\] "(.*?)" (\\d+) (\\d+|-)'
+IIS: '^(\\d{4}-\\d{2}-\\d{2}) (\\d{2}:\\d{2}:\\d{2}) (\\S+) (\\S+) (\\S+) (\\S+) (\\d+) (\\d+) (\\d+) (\\d+)'
+Custom: '^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}) \\[(\\w+)\\] (.*)'
+```
+
+---
+
+## Key Takeaways
+
+- **Strings** are fundamental for text processing and instrument communication
+- **Regular expressions** provide powerful pattern matching capabilities
+- **Proper parsing** handles real-world data formatting challenges
+- **Performance optimization** matters for large text processing tasks
+- **Error handling** ensures robust string operations
+
+---
+
+## Practice Exercises
+
+1. **Email Validator:** Create a VI that validates email addresses using regular expressions and provides specific feedback for different types of formatting errors.
+
+2. **CSV Processor:** Build a robust CSV parser that handles quoted fields, embedded commas, and different line endings while providing detailed error reporting.
+
+3. **Log File Monitor:** Develop a real-time log file monitor that parses new entries, extracts key information, and triggers alerts based on configurable patterns.
+
+---
+
+## Summary
+
+In this lesson, you've mastered LabVIEW's string handling and parsing capabilities:
+
+• Applied fundamental string operations for text manipulation  
+• Used regular expressions for advanced pattern matching  
+• Implemented robust parsing for real-world data formats  
+• Built efficient string processing applications  
+
+Up next → **Lesson 19: Icons, Connectors & Modular VIs** – where you'll learn to create professional, reusable subVIs with proper interfaces.

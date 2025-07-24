@@ -1,0 +1,330 @@
+---
+id: m2-debugging-basics
+title: Probes, Execution Highlighting & Breakpoints
+description: Master essential debugging techniques including probes, execution highlighting, and breakpoints to troubleshoot your LabVIEW programs effectively.
+category: LabVIEW IDE Fluency
+difficulty: beginner
+estimatedTime: 18
+quiz:
+  - question: What tool do you use to check intermediate values on a wire during VI execution?
+    options:
+      - Breakpoint tool
+      - Probe tool
+      - Positioning tool
+      - Operating tool
+    answer: Probe tool
+  - question: What happens when execution highlighting is enabled?
+    options:
+      - The VI runs faster
+      - You can see data flow through wires as animated bubbles
+      - The VI automatically stops at errors
+      - All wires turn red
+    answer: You can see data flow through wires as animated bubbles
+---
+
+# Probes, Execution Highlighting & Breakpoints
+
+Master the essential debugging techniques that will save you countless hours troubleshooting LabVIEW programs. This lesson covers the three most powerful debugging tools in LabVIEW.
+
+## Prerequisites
+
+- Basic understanding of VIs and block diagrams
+- Familiarity with wiring and running VIs
+
+## Learning Objectives
+
+By the end of this lesson, you will be able to:
+- Use probes to monitor data on wires during execution
+- Enable execution highlighting to visualize dataflow
+- Set and use breakpoints to pause program execution
+- Combine debugging techniques for effective troubleshooting
+
+---
+
+## Understanding LabVIEW Debugging
+
+Debugging is the process of finding and fixing errors (bugs) in your programs. LabVIEW provides powerful visual debugging tools that take advantage of the graphical programming environment.
+
+> 💡 **Key Insight**  
+> LabVIEW's debugging tools are designed around the dataflow paradigm, allowing you to visually see how data moves through your program.
+
+## 1. The Probe Tool
+
+### What is a Probe?
+
+A **probe** is a debugging tool that displays the value carried by a wire during VI execution. Think of it as a "window" into your dataflow.
+
+### When to Use Probes
+
+- Check intermediate values in calculations
+- Verify data types and values at specific points
+- Troubleshoot unexpected results
+- Monitor array contents or cluster data
+
+### How to Use Probes
+
+**Method 1: Using the Probe Tool**
+1. Select the **Probe tool** from the Tools palette
+2. Click on any wire in your block diagram
+3. A probe window appears showing the wire's data
+
+**Method 2: Pop-up Menu**
+1. Right-click on any wire
+2. Select **Probe** from the context menu
+
+```
+Wire → Right-click → Probe
+```
+
+### Probe Window Features
+
+The probe window displays:
+- **Wire number**: Automatically assigned by LabVIEW
+- **Data value**: Current value flowing through the wire
+- **Data type**: Shows the wire's data type
+- **Timestamp**: When the data was captured (if enabled)
+
+> 📝 **Practice Tip**  
+> Probes are numbered automatically. If you lose track of which probe corresponds to which wire, right-click on the probe and select "Find Wire" or vice versa.
+
+### Custom Probes
+
+You can create custom probes for complex data types:
+- Array probes show array contents in table format
+- Cluster probes display individual cluster elements
+- Waveform probes show signal characteristics
+
+---
+
+## 2. Execution Highlighting
+
+### What is Execution Highlighting?
+
+**Execution highlighting** is a debugging mode that animates the flow of data through your block diagram, showing you exactly how dataflow programming works.
+
+### Visual Indicators
+
+When execution highlighting is enabled:
+- **Data bubbles**: Small moving circles show data flowing through wires
+- **Node highlighting**: Functions and structures highlight as they execute
+- **Wire animation**: Different colors and styles show different data types
+
+### Enabling Execution Highlighting
+
+1. Click the **Execution Highlighting** button on the block diagram toolbar
+2. The lightbulb icon becomes illuminated
+3. Run your VI to see the animation
+
+```
+Block Diagram Toolbar → Execution Highlighting Button (Lightbulb)
+```
+
+### What You Can Observe
+
+- **Execution order**: See which functions execute when
+- **Data timing**: Understand when data becomes available
+- **Bottlenecks**: Identify slow operations
+- **Parallel execution**: See multiple dataflows simultaneously
+
+> ⚠️ **Performance Note**  
+> Execution highlighting significantly slows down VI execution. Use it only for debugging, not for performance testing.
+
+---
+
+## 3. Breakpoints
+
+### What are Breakpoints?
+
+**Breakpoints** are markers that pause VI execution at specific locations, allowing you to inspect the program state.
+
+### Types of Breakpoints
+
+**Node Breakpoints**
+- Pause execution just before a function executes
+- Red border appears around the node
+
+**Wire Breakpoints**  
+- Pause execution after data passes through a wire
+- Red dot appears on the wire
+
+**Block Diagram Breakpoints**
+- Pause when an entire block diagram completes
+- Red border around the entire diagram
+
+### Setting Breakpoints
+
+**Using the Breakpoint Tool:**
+1. Select the **Breakpoint tool** from the Tools palette
+2. Click on a node, wire, or block diagram
+3. A red indicator shows the breakpoint is set
+
+**Using Pop-up Menus:**
+1. Right-click on a node or wire
+2. Select **Set Breakpoint**
+
+### Managing Breakpoints
+
+**Removing Breakpoints:**
+- Click again with the Breakpoint tool
+- Or right-click and select **Clear Breakpoint**
+
+**Finding Breakpoints:**
+- Use Edit → Find and Replace
+- Search for Object Type: "Breakpoint"
+
+> ⚠️ **Important Warning**  
+> Always remove breakpoints before saving your VI for production use. Saved breakpoints can cause confusion later.
+
+---
+
+## 4. Single-Step Execution
+
+### Step-by-Step Debugging
+
+Combine breakpoints with single-step execution for detailed debugging:
+
+**Step Into** - Execute the next node and enter any subVIs
+**Step Over** - Execute the next node without entering subVIs  
+**Step Out** - Complete execution of the current subVI
+
+### Single-Step Controls
+
+Located on the block diagram toolbar:
+- **Step Into button**
+- **Step Over button** 
+- **Step Out button**
+
+---
+
+## 5. Debugging Workflow
+
+### Systematic Debugging Approach
+
+1. **Identify the Problem**
+   - What should happen vs. what actually happens
+   - Narrow down the problem area
+
+2. **Set Strategic Probes**
+   - Place probes at key data points
+   - Monitor inputs and outputs of suspected functions
+
+3. **Use Execution Highlighting**
+   - Watch data flow to understand execution order
+   - Identify where data becomes incorrect
+
+4. **Set Targeted Breakpoints**
+   - Pause execution at critical points
+   - Inspect values using probes
+
+5. **Step Through Code**
+   - Use single-step execution to examine each operation
+   - Verify calculations step-by-step
+
+### Common Debugging Scenarios
+
+**Scenario 1: Wrong Output Value**
+```
+Solution: Place probes before and after calculations
+→ Identify which operation produces incorrect result
+```
+
+**Scenario 2: VI Never Stops**
+```
+Solution: Use execution highlighting to find infinite loops
+→ Check loop termination conditions
+```
+
+**Scenario 3: Broken Wires**
+```
+Solution: Click broken run arrow for error details
+→ Fix data type mismatches or unwired terminals
+```
+
+---
+
+## 6. Debugging Best Practices
+
+### Do's
+
+✅ **Remove all breakpoints** before saving production VIs  
+✅ **Use meaningful probe labels** for complex debugging sessions  
+✅ **Combine multiple debugging techniques** for comprehensive analysis  
+✅ **Test edge cases** with extreme input values  
+✅ **Document debugging findings** for future reference  
+
+### Don'ts
+
+❌ **Don't leave execution highlighting on** during normal operation  
+❌ **Don't ignore warnings** - they often indicate potential problems  
+❌ **Don't debug without understanding** the expected behavior first  
+❌ **Don't probe every wire** - be strategic about placement  
+
+---
+
+## 7. Practical Examples
+
+### Example 1: Debugging a Simple Calculation
+
+```
+Problem: Addition VI gives wrong result
+Solution:
+1. Place probes on input wires
+2. Verify input values are correct  
+3. Place probe on output wire
+4. Check if Add function works correctly
+```
+
+### Example 2: Finding an Infinite Loop
+
+```
+Problem: While Loop never terminates
+Solution:
+1. Enable execution highlighting
+2. Watch the loop conditional terminal
+3. Place probe on the Boolean wire
+4. Verify the condition can become False
+```
+
+---
+
+## Key Takeaways
+
+- **Probes** let you monitor data values on wires during execution
+- **Execution highlighting** visualizes dataflow and execution order
+- **Breakpoints** pause execution for detailed inspection
+- **Combine techniques** for comprehensive debugging
+- **Always clean up** debugging artifacts before saving
+
+---
+
+## Practice Exercises
+
+### Exercise 1: Basic Probing
+1. Create a VI that multiplies two numbers
+2. Place probes on input and output wires
+3. Run the VI and observe the probe values
+
+### Exercise 2: Execution Highlighting
+1. Create a VI with a For Loop that counts from 0 to 9
+2. Enable execution highlighting
+3. Watch the data flow through the loop
+
+### Exercise 3: Breakpoint Practice
+1. Create a VI with multiple mathematical operations
+2. Set breakpoints at different stages
+3. Practice single-step execution through the code
+
+---
+
+## Summary
+
+In this lesson, you learned the fundamental debugging techniques in LabVIEW:
+
+• **Probes** provide real-time visibility into wire data values  
+• **Execution highlighting** shows animated dataflow through your diagrams  
+• **Breakpoints** allow you to pause and inspect program execution  
+• **Single-step debugging** lets you examine code operation by operation  
+
+These debugging tools are essential for developing robust LabVIEW applications. Master them early and they'll save you significant time throughout your LabVIEW programming journey.
+
+Up next → **Lesson 12: LabVIEW Style Guide Essentials** – Learn the conventions that make your code professional and maintainable.

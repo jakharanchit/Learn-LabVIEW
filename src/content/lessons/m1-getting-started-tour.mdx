@@ -1,0 +1,255 @@
+---
+id: m1-getting-started-tour
+title: Touring the LabVIEW IDE
+description: Explore the Project Explorer, palettes, help panes and window shortcuts to master the LabVIEW development environment.
+category: Getting Started
+difficulty: beginner
+estimatedTime: 20
+quiz:
+  - question: The palette that contains controls for the front panel is called the ______ palette.
+    options:
+      - Functions
+      - Tools
+      - Controls
+      - Build
+    answer: Controls
+  - question: Pressing Ctrl+H opens the ______ window.
+    options:
+      - Help
+      - History
+      - Hierarchy
+      - Hardware
+    answer: Help
+---
+
+# Touring the LabVIEW IDE
+
+Master the LabVIEW Integrated Development Environment (IDE) by learning its essential components, navigation shortcuts, and powerful features that make graphical programming efficient and enjoyable.
+
+## Prerequisites
+
+- LabVIEW installed and activated (from previous lesson)
+- Basic familiarity with launching LabVIEW
+
+## Overview
+
+The LabVIEW IDE consists of several key components that work together to provide a comprehensive development environment. Understanding these components is crucial for efficient LabVIEW programming.
+
+## 1. The Three Main Windows
+
+### Front Panel
+The **front panel** is the interactive user interface of a VI, simulating the front panel of a physical instrument. It contains:
+- **Controls** (inputs from user) - knobs, buttons, text boxes
+- **Indicators** (outputs to user) - LEDs, meters, graphs
+- **Decorations** - labels, boxes for organization
+
+### Block Diagram
+The **block diagram** contains the actual executable code using LabVIEW's graphical programming language "G". It includes:
+- **Terminals** - represent front panel controls/indicators
+- **Functions** - built-in operations (Add, Multiply, etc.)
+- **Structures** - loops, case statements, sequences
+- **Wires** - data connections between elements
+
+### Icon/Connector Pane
+Located in the upper-right corner of both front panel and block diagram:
+- **Icon** - graphical representation when used as subVI
+- **Connector** - defines input/output terminals for subVI use
+
+## 2. Essential Palettes
+
+### Controls Palette (Front Panel)
+Access: Right-click on front panel or **View → Controls Palette**
+
+Key subpalettes:
+- **Modern** - contemporary-styled controls/indicators
+- **Silver** - alternative visual style
+- **Classic** - traditional LabVIEW appearance
+- **Express** - pre-configured controls for common tasks
+
+#### Navigation Tips:
+- Use **search** at top of palette
+- **Pin** frequently used subpalettes
+- **Customize** palette organization
+
+### Functions Palette (Block Diagram)
+Access: Right-click on block diagram or **View → Functions Palette**
+
+Essential subpalettes:
+- **Programming** - core functions, structures, arrays
+- **Numeric** - mathematical operations
+- **Boolean** - logical operations
+- **String** - text manipulation
+- **Comparison** - equal, greater than, etc.
+- **Array** - array manipulation functions
+
+### Tools Palette
+Access: **View → Tools Palette**
+
+Critical tools:
+- **Operating** - run-time interaction with controls
+- **Positioning** - select and move objects
+- **Labeling** - edit text and labels
+- **Wiring** - connect terminals with wires
+- **Object Shortcut Menu** - right-click functionality
+- **Scrolling** - navigate large diagrams
+- **Breakpoint** - debugging tool
+- **Probe** - debugging data inspection
+- **Color Copy** - copy colors between objects
+
+## 3. Menu System Overview
+
+### File Menu
+- **New** - create VIs, projects, other files
+- **Open** - access existing files
+- **Save/Save As** - preserve your work
+- **VI Properties** - configure VI behavior
+
+### Edit Menu
+- **Undo/Redo** - reverse/repeat actions
+- **Find/Replace** - locate elements in VIs
+- **Remove Broken Wires** - clean up wiring errors
+
+### View Menu
+- **Controls/Functions Palette** - show/hide palettes
+- **Tools Palette** - access development tools
+- **Error List** - see compilation errors
+- **Context Help** - get function information
+
+### Project Menu
+- **New Project** - create project container
+- **Add to Project** - include files in project
+- **Build Specifications** - create executables
+
+## 4. The Help System
+
+### Context Help Window
+**Shortcut: Ctrl+H**
+
+Features:
+- **Automatic updates** as you hover over objects
+- **Detailed/Simple** view toggle
+- **Lock Help** to keep specific information visible
+- **More Help** button for comprehensive documentation
+
+### LabVIEW Help Documentation
+Access: **Help → LabVIEW Help**
+
+Sections:
+- **Fundamentals** - basic concepts
+- **Programming** - advanced topics
+- **Hardware** - DAQ and instrument control
+- **Connectivity** - networking and communication
+
+## 5. Project Explorer Window
+
+The **Project Explorer** organizes your LabVIEW development:
+
+Components:
+- **My Computer** - local development target
+- **Dependencies** - automatically tracked subVIs
+- **Build Specifications** - rules for creating executables
+
+Benefits:
+- **File organization** without changing disk structure
+- **Dependency tracking** - see what VIs call others
+- **Build management** - create applications and installers
+- **Source control integration** - work with version control
+
+## 6. Toolbar Functions
+
+### Standard Toolbar (both windows)
+- **Run** - execute the VI
+- **Run Continuously** - repeat execution
+- **Abort** - stop execution immediately
+- **Pause** - suspend execution temporarily
+
+### Navigation
+- **Ctrl+E** - switch between front panel and block diagram
+- **Ctrl+T** - tile windows vertically
+- **Ctrl+Shift+T** - tile windows horizontally
+
+## 7. Workspace Customization
+
+### Window Management
+- **Floating windows** - independent positioning
+- **Tabbed environment** - MDI-style interface
+- **Multiple monitors** - spread across displays
+
+### Palette Customization
+1. Right-click palette title bar
+2. Select **Customize**
+3. Add/remove functions and subpalettes
+4. Create custom categories
+
+## Practice Activities
+
+### Activity 1: Basic Navigation
+1. Launch LabVIEW and create a **Blank VI**
+2. Practice switching between front panel and block diagram using **Ctrl+E**
+3. Open the **Context Help** window (**Ctrl+H**)
+4. Hover over different areas and observe help updates
+
+### Activity 2: Palette Exploration
+1. Right-click on the front panel to open **Controls palette**
+2. Navigate to **Modern → Numeric** and examine available controls
+3. Switch to block diagram and right-click to open **Functions palette**
+4. Explore **Programming → Numeric** functions
+
+### Activity 3: Simple VI Creation
+1. Place a **Numeric Control** on the front panel
+2. Place a **Numeric Indicator** on the front panel
+3. Switch to block diagram - notice the terminals
+4. From **Functions → Programming → Numeric**, add an **Increment** function
+5. Wire the control terminal to increment input, and increment output to indicator terminal
+6. Return to front panel and run the VI
+
+## Key Shortcuts Reference
+
+| Shortcut | Function |
+|----------|----------|
+| **Ctrl+N** | New VI |
+| **Ctrl+O** | Open file |
+| **Ctrl+S** | Save |
+| **Ctrl+E** | Switch panel/diagram |
+| **Ctrl+H** | Context Help |
+| **Ctrl+Space** | Quick Drop |
+| **Ctrl+B** | Remove Broken Wires |
+| **Tab** | Toggle tools |
+| **Space** | Toggle Operating/Positioning |
+
+## Best Practices
+
+1. **Keep Context Help open** - essential for learning function inputs/outputs
+2. **Use Quick Drop frequently** - fastest way to place functions
+3. **Organize with Project Explorer** - maintain clean file structure
+4. **Customize palettes** - put frequently used items in easy reach
+5. **Learn keyboard shortcuts** - dramatically improve development speed
+
+## Troubleshooting Common Issues
+
+### "I can't find a function!"
+- Use **Quick Drop** (Ctrl+Space) and type the function name
+- Search in the **Functions palette**
+- Check **LabVIEW Help** for function location
+
+### "My VI won't run!"
+- Check for **broken run arrow**
+- Open **Error List** window to see issues
+- Verify all required terminals are wired
+
+### "Palettes disappeared!"
+- **View → Controls Palette** (front panel)
+- **View → Functions Palette** (block diagram)
+- Reset window layout: **Window → Reset Window Layout**
+
+## Summary
+
+In this lesson you've learned:
+
+• The three main LabVIEW windows and their purposes  
+• How to navigate and customize the Controls and Functions palettes  
+• Essential keyboard shortcuts for efficient development  
+• The importance and usage of the Context Help system  
+• Project Explorer for organizing your LabVIEW work  
+
+Up next → **Lesson 3: Your First VI – "Hello G"** – where you'll create your very first LabVIEW program!

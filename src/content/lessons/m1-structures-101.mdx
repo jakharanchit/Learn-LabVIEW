@@ -1,0 +1,415 @@
+---
+id: m1-structures-101
+title: Loop & Case Structures 101
+description: Master LabVIEW's fundamental programming structures including For Loops, While Loops, and Case Structures for controlling program execution flow.
+category: Structures 101
+difficulty: beginner
+estimatedTime: 20
+quiz:
+  - question: What determines when a For Loop stops executing?
+    options:
+      - A Boolean condition
+      - The count terminal value
+      - A stop button press
+      - Manual intervention
+    answer: The count terminal value
+  - question: When does a While Loop check its conditional terminal?
+    options:
+      - Before each iteration
+      - During each iteration
+      - At the end of each iteration
+      - Only at the start
+    answer: At the end of each iteration
+---
+
+# Loop & Case Structures 101
+
+Programming structures are the building blocks that control how your LabVIEW programs execute. This lesson introduces the three most essential structures: For Loops, While Loops, and Case Structures.
+
+## Prerequisites
+
+- Understanding of LabVIEW data types and wiring
+- Basic familiarity with the block diagram environment
+
+## Learning Objectives
+
+By the end of this lesson, you will:
+- Understand when to use For Loops vs While Loops
+- Know how to wire conditional logic with Case Structures
+- Control data flow in and out of structures
+- Implement basic iteration and decision-making in your VIs
+
+## Programming Structures Overview
+
+LabVIEW provides several structures to control program execution:
+
+1. **For Loops** - Execute a set number of times
+2. **While Loops** - Execute until a condition is met  
+3. **Case Structures** - Execute different code based on conditions
+4. **Sequence Structures** - Control execution order
+5. **Event Structures** - Respond to user interactions (advanced)
+
+Today we'll focus on the first three, which handle 90% of programming logic needs.
+
+## For Loops: Counting Made Easy
+
+The **For Loop** executes its contents a specific number of times, determined by the count terminal.
+
+### For Loop Anatomy
+
+```
+┌─────────────────────┐
+│  [N] ←── Count      │
+│                     │
+│   Your code here    │
+│                     │
+│  [i] ←── Iteration  │
+└─────────────────────┘
+```
+
+**Key Terminals:**
+- **Count (N)**: Number of iterations (input)
+- **Iteration (i)**: Current iteration number (output, 0-based)
+
+### How For Loops Work
+
+1. **Before execution**: LabVIEW reads the count terminal
+2. **During execution**: Loop runs from i=0 to i=(N-1)
+3. **After execution**: Data exits through tunnel(s)
+
+### For Loop Example: Array Generation
+
+```
+Front Panel:
+- Array Size (numeric control)
+- Random Array (numeric array indicator)
+
+Block Diagram:
+Array Size → For Loop Count
+             Inside loop: Random Number (0-1) → Auto-indexing tunnel
+                         Loop generates one random number per iteration
+```
+
+> 💡 **Key Insight**  
+> For Loops are perfect when you know exactly how many times something should happen.
+
+## While Loops: Conditional Execution
+
+The **While Loop** continues executing until a Boolean condition is met.
+
+### While Loop Anatomy
+
+```
+┌─────────────────────┐
+│                     │
+│   Your code here    │
+│                     │
+│  [Stop?] ←── Cond   │
+└─────────────────────┘
+```
+
+**Key Terminals:**
+- **Conditional**: Boolean input that controls loop continuation
+- **Iteration**: Current iteration count (optional output)
+
+### While Loop Modes
+
+**Stop if True (Default):**
+- Loop continues while condition is FALSE
+- Stops when condition becomes TRUE
+
+**Continue if True:**
+- Loop continues while condition is TRUE  
+- Stops when condition becomes FALSE
+
+> ⚠️ **Important**  
+> While Loops check the conditional terminal at the END of each iteration, so they always execute at least once!
+
+### While Loop Example: User-Controlled Data Acquisition
+
+```
+Front Panel:
+- Stop Button (Boolean control)
+- Temperature Reading (numeric indicator)
+
+Block Diagram:
+While Loop {
+    Acquire Temperature → Temperature Reading
+    Stop Button → Conditional Terminal (Stop if True)
+}
+```
+
+## Case Structures: Decision Making
+
+The **Case Structure** executes different code based on the value of a selector input.
+
+### Case Structure Anatomy
+
+```
+┌─────────────────────┐
+│ [Selector] ←── Input│
+│                     │
+│   Case 0 code here  │
+│                     │
+└─────────────────────┘
+```
+
+**Key Features:**
+- **Selector terminal**: Determines which case executes
+- **Multiple cases**: Add cases for different values
+- **Default case**: Handles unspecified values
+
+### Case Structure Types
+
+**Boolean Case Structure:**
+- Two cases: TRUE and FALSE
+- Selector wired to Boolean data
+
+**Numeric Case Structure:**
+- Multiple cases based on numbers
+- Can specify ranges (e.g., 0..10)
+
+**String Case Structure:**
+- Cases based on text values
+- Useful for parsing commands
+
+### Case Structure Example: Simple Calculator
+
+```
+Front Panel:
+- Number A, Number B (numeric controls)
+- Operation (string control: "Add", "Subtract", "Multiply", "Divide")
+- Result (numeric indicator)
+
+Block Diagram:
+Operation → Case Structure Selector
+Cases:
+  "Add": A + B → Result
+  "Subtract": A - B → Result  
+  "Multiply": A × B → Result
+  "Divide": A ÷ B → Result
+```
+
+## Tunnels: Data In and Out of Structures
+
+Data passes through structure boundaries via **tunnels** - small squares on the structure border.
+
+### Tunnel Types
+
+**Input Tunnels:**
+- Solid squares
+- Bring data INTO the structure
+- Data available throughout all iterations
+
+**Output Tunnels:**
+- Hollow squares initially
+- Carry data OUT of the structure
+- Must be wired in ALL cases (Case Structures)
+
+**Auto-Indexing Tunnels (For Loops):**
+- Automatically build arrays
+- Square with thick border
+- Each iteration adds one element
+
+### Auto-Indexing Example
+
+```
+For Loop (Count = 5):
+  Random Number → Auto-indexing output tunnel
+  
+Result: Array with 5 random numbers
+```
+
+## Practical Applications
+
+### Data Logger with User Control
+
+```vhdl
+Front Panel:
+- Log Data (Boolean - TRUE to start)
+- Stop Logging (Boolean - TRUE to stop)  
+- Sample Rate (numeric)
+- Data Log (array indicator)
+
+Block Diagram:
+While Loop {
+    Case Structure (Log Data selector):
+      TRUE case: 
+        - Acquire data sample
+        - Add to array
+      FALSE case:
+        - Do nothing (just wait)
+    
+    Wait (Sample Rate)
+    Stop Logging → Loop conditional
+}
+```
+
+### Array Processing with Conditional Logic
+
+```vhdl
+Front Panel:
+- Input Array (numeric array)
+- Processing Mode (string: "Sum", "Average", "Max")
+- Result (numeric indicator)
+
+Block Diagram:
+For Loop (auto-sized by Input Array):
+  Index Array → Current Element
+  
+  Case Structure (Processing Mode):
+    "Sum": Add elements using shift register
+    "Average": Sum and divide by array size
+    "Max": Compare and keep maximum
+```
+
+## Common Patterns and Best Practices
+
+### The Classic "Process Until Done" Pattern
+
+```vhdl
+Initialize variables
+While Loop:
+  Do some work
+  Check if finished → Stop condition
+```
+
+### The "State Machine" Foundation
+
+```vhdl
+Current State → Case Structure:
+  "Initialize": Setup → Next State = "Acquire"
+  "Acquire": Get data → Next State = "Process"  
+  "Process": Analyze → Next State = "Display"
+  "Display": Show results → Next State = "Acquire" or "Stop"
+```
+
+### Error Handling Integration
+
+```vhdl
+While Loop:
+  Case Structure (Error occurred?):
+    FALSE: Normal operation
+    TRUE: Handle error, set stop condition
+```
+
+## Performance Considerations
+
+### Loop Timing
+
+**Always include timing in continuous loops:**
+```vhdl
+While Loop:
+  Your code here
+  Wait (ms) ← 10-100 ms typical
+  Stop condition
+```
+
+**Without timing:**
+- Loops consume 100% CPU
+- UI becomes unresponsive
+- System performance degrades
+
+### Memory Management
+
+**Arrays in loops:**
+- Pre-allocate when possible
+- Use shift registers for running calculations
+- Avoid building large arrays unnecessarily
+
+## Common Mistakes and Solutions
+
+❌ **Infinite While Loops**
+```vhdl
+// Stop button outside loop - WRONG!
+Stop Button
+While Loop:
+  Do work
+  TRUE → Conditional (never changes!)
+```
+
+✅ **Proper Stop Control**
+```vhdl
+While Loop:
+  Do work
+  Stop Button → Conditional (read inside loop)
+```
+
+❌ **Uninitialized Case Structure Outputs**
+```vhdl
+Case Structure:
+  Case 0: Wire to output
+  Case 1: Nothing wired - BROKEN!
+```
+
+✅ **All Cases Wired**
+```vhdl
+Case Structure:
+  Case 0: Value A → Output
+  Case 1: Value B → Output
+  Default: Default Value → Output
+```
+
+❌ **Wrong Loop Type**
+```vhdl
+// Need exactly 10 iterations
+While Loop with counter - COMPLEX!
+```
+
+✅ **Right Tool for the Job**
+```vhdl
+For Loop (Count = 10) - SIMPLE!
+```
+
+## Practice Exercises
+
+### Exercise 1: Number Generator
+Create a VI that generates a specified number of random values:
+- Use a For Loop with count from front panel control
+- Generate random numbers between 0-100
+- Display results in an array indicator
+
+### Exercise 2: Temperature Monitor  
+Build a continuous temperature monitoring system:
+- Use a While Loop for continuous operation
+- Simulate temperature with random values (0-50°C)
+- Include a stop button for user control
+- Add a 1-second delay between readings
+
+### Exercise 3: Grade Calculator
+Design a grade processing system:
+- Input: Student score (0-100)
+- Use Case Structure to assign letter grades:
+  - 90-100: "A"
+  - 80-89: "B"  
+  - 70-79: "C"
+  - 60-69: "D"
+  - Below 60: "F"
+
+## Summary
+
+**For Loops:**
+- Use when you know the exact number of iterations
+- Great for array processing and data generation
+- Auto-indexing builds arrays automatically
+
+**While Loops:**  
+- Use for conditional execution
+- Perfect for user-controlled processes
+- Always execute at least once
+- Include timing to prevent CPU hogging
+
+**Case Structures:**
+- Implement decision-making logic
+- Support Boolean, numeric, and string selectors
+- All cases must wire outputs to prevent broken VIs
+
+**Best Practices:**
+- Choose the right structure for your logic
+- Always include timing in continuous loops
+- Wire all case outputs properly
+- Use meaningful case labels
+
+These three structures form the foundation of LabVIEW programming. Master them, and you'll be able to implement sophisticated program logic with ease!
+
+---

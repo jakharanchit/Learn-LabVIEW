@@ -1,69 +1,44 @@
+/// <reference types="vite/client" />
+
 import type { MarkdownLesson, LabviewExample, StandaloneQuiz, Achievement } from '../types';
-import { Lesson1Content, lesson1Quiz } from '../content/lesson1';
-import { Lesson2Content, lesson2Quiz } from '../content/lesson2';
 import { mockExamples } from '../content/examples';
 import { mockQuizzes } from '../content/quizzes';
 import { mockAchievements } from '../content/achievements';
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import { lessonMeta, LessonMeta } from '../content/lessons/lessonMeta';
 
-// In a real JAMstack app, you'd fetch and parse markdown files with frontmatter.
-// We'll simulate that by importing content from TS files.
-const lessonsData: Omit<MarkdownLesson, 'completed'>[] = [
-  {
-    id: 'labview-basics',
-    title: 'Introduction to LabVIEW',
-    description: 'Understand the core components of the LabVIEW environment.',
-    category: 'Getting Started',
-    difficulty: 'beginner',
-    estimatedTime: 10,
-    content: Lesson1Content,
-    quiz: lesson1Quiz,
-  },
-  {
-    id: 'data-flow',
-    title: 'Understanding Data Flow',
-    description: 'Learn the fundamental data flow paradigm in LabVIEW.',
-    category: 'Getting Started',
-    difficulty: 'beginner',
-    estimatedTime: 15,
-    content: Lesson2Content,
-    quiz: lesson2Quiz,
-  },
-  {
-    id: 'while-loops',
-    title: 'While Loops',
-    description: 'Learn how to repeat code execution using While Loops.',
-    category: 'Core Concepts',
-    difficulty: 'beginner',
-    estimatedTime: 15,
-    content: () => React.createElement(ReactMarkdown, {children: 'This is placeholder content for While Loops.'}),
-    quiz: [
-      {
-        question: 'What does a While Loop need?',
-        options: ['A stop condition', 'A counter', 'An input'],
-        answer: 'A stop condition',
-      },
-    ],
-  },
-];
+// Import all MDX files as modules with default export only
+const lessonModules = import.meta.glob('../content/lessons/*.mdx', { eager: true });
+
+console.log('Loaded lesson modules:', lessonModules);
+
 
 export const loadAllLessons = async (): Promise<MarkdownLesson[]> => {
-  // Simulate network delay
-  await new Promise(res => setTimeout(res, 200));
   // The 'completed' flag is initially false and will be managed by the App's state
-  return lessonsData.map(lesson => ({ ...lesson, completed: false }));
+  return lessonMeta.map(meta => {
+    // Match by filename
+    const mod = lessonModules[`../content/lessons/${meta.id}.mdx`] as { default: React.FC } | undefined;
+    if (!mod || typeof mod.default !== 'function') {
+      console.warn(`No MDX component found for lesson id: ${meta.id}`);
+      return null;
+    }
+    return {
+      ...meta,
+      content: mod.default,
+      completed: false,
+    };
+  }).filter((x): x is MarkdownLesson => !!x);
 };
 
 export const loadLesson = async (id: string): Promise<MarkdownLesson> => {
-  // Simulate network delay
-  await new Promise(res => setTimeout(res, 100));
-  const lesson = lessonsData.find(l => l.id === id);
-  if (!lesson) {
-    throw new Error(`Lesson with id ${id} not found`);
-  }
-  // The 'completed' flag is managed by App state, so we return a fresh copy here.
-  return { ...lesson, completed: false };
+  const meta = lessonMeta.find(l => l.id === id);
+  if (!meta) throw new Error(`Lesson metadata with id ${id} not found`);
+  const mod = lessonModules[`../content/lessons/${meta.id}.mdx`] as { default: React.FC } | undefined;
+  if (!mod || typeof mod.default !== 'function') throw new Error(`No MDX component found for lesson id: ${id}`);
+  return {
+    ...meta,
+    content: mod.default,
+    completed: false,
+  };
 };
 
 export const loadAllExamples = async (): Promise<LabviewExample[]> => {
@@ -83,3 +58,8 @@ export const loadAllAchievements = async (): Promise<Achievement[]> => {
     await new Promise(res => setTimeout(res, 0));
     return mockAchievements;
 };
+
+// Import all MDX files in the lessons directory eagerly
+
+
+

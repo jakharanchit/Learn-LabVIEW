@@ -1,0 +1,134 @@
+---
+id: m1-getting-started-install
+title: Installing LabVIEW & Your First Launch
+description: Set up NI LabVIEW Community Edition, verify licensing, and open LabVIEW for the very first time.
+category: Getting Started
+difficulty: beginner
+estimatedTime: 15
+quiz:
+  - question: Which LabVIEW edition is free for personal and non-commercial use?
+    options:
+      - LabVIEW Professional
+      - LabVIEW FPGA Module
+      - LabVIEW Community Edition
+      - LabVIEW Real-Time Module
+    answer: LabVIEW Community Edition
+  - question: Which window appears immediately after launching LabVIEW?
+    options:
+      - Project Explorer
+      - Getting Started
+      - VI Properties
+      - Context Help
+    answer: Getting Started
+---
+
+# Installing LabVIEW & Your First Launch
+
+Kick-off your LabVIEW journey by putting the tools in place. This lesson walks you through installing NI LabVIEW Community Edition, activating the free Community license, and launching LabVIEW for the first time.
+
+## Prerequisites
+
+None – this is the very first step in your LabVIEW learning journey.
+
+## Overview
+
+LabVIEW (Laboratory Virtual Instrument Engineering Workbench) is a graphical programming environment that uses a visual programming language called "G". Before you can start creating virtual instruments, you need to properly install and configure LabVIEW on your system.
+
+## 1. Downloading the Installer
+
+1. Visit `ni.com/labview` and choose **Community Edition** (≈ 3 GB download)
+2. While downloading, create or sign in to a free **NI Account** – you'll need it for activation
+
+> ❗ **Key Point**  
+> Community Edition is **Windows-only** today. Mac & Linux users should install the 45-day evaluation of LabVIEW 2024 Q3 instead.
+
+## 2. Running the Installer
+
+1. Right-click **NI Package Manager** → *Run as Administrator*
+2. Accept the default location `C:\Program Files\National Instruments\`
+3. Select recommended components:
+   - LabVIEW 2024 Q3 (32-bit)
+   - G Web Development Libraries (optional – used later)
+   - NI-DAQmx (drivers, optional if no hardware yet)
+
+### Typical Install Flow
+
+```
+Welcome ▶ License ▶ Features ▶ Destination ▶ Review ▶ Install ▶ Finish
+```
+
+Installation takes 10-20 min depending on SSD/HDD and antivirus.
+
+> 💡 **Tip**  
+> Disable real-time virus scanning temporarily for the fastest install. Re-enable afterwards.
+
+## 3. Activating Community License
+
+1. After reboot, launch **NI License Manager**
+2. Sign in with your NI Account
+3. Expand **LabVIEW 2024 Q3** → right-click **Community Edition** → *Activate*
+4. Activation status turns **green**
+
+> ✅ **Best Practice**  
+> Keep License Manager open – it warns you if a toolkit enters evaluation mode later.
+
+## 4. First Launch & the Getting Started Window
+
+Open **LabVIEW 2024 Q3 (32-bit)** from the Start Menu.
+
+### Getting Started Window Sections
+
+| Panel | Purpose |
+|-------|---------|
+| *Create Project* | Templates & examples to kick-start coding |
+| *Blank VI* | Opens an empty front panel/block diagram pair |
+| *Recent Projects* | Quick access to active work |
+| *Learn* | Links to NI Learn LabVIEW paths |
+
+## 5. Configuring IDE Essentials
+
+1. **Tools → Options**
+2. Recommended tweaks:
+   - *Editor → Block Diagram* → untick **Enable automatic error handling**
+   - *Environment* → enable **Place front-panel terminals as icons** off (compact wires)
+   - *Fonts* → increase Application & Dialog to 15 pt if on 4K display
+
+### Quick-Drop Shortcut
+
+Press **Ctrl+Space** – the **Quick-Drop** palette appears. Start typing "Add", hit **Enter**, and the Add function drops on the diagram.
+
+```
+// Quick-Drop is your coder's teleportation – remember Ctrl+Space!
+```
+
+## 6. Creating Your "Install Verification VI"
+
+1. On the **Front Panel** drag a **Numeric Control** (Modern → Numeric)
+2. On the **Block Diagram** use Quick-Drop to add *Add* (`+`) function
+3. Wire two numeric terminals to the `+` node
+4. **Run** – verify that inputs sum correctly
+
+> 🎉 If this works, your LabVIEW install is healthy.
+
+## Key Takeaways
+
+- Community Edition is the go-to for hobbyists and learners
+- NI Package Manager handles all installs & upgrades
+- The Getting Started window is your project hub
+- Quick-Drop (Ctrl+Space) is your best friend for rapid development
+
+## Practice Exercises
+
+1. Use Package Manager to add the **Python Node** support component
+2. Change the IDE theme to *Dark* in Tools → Options and relaunch
+3. Create a new project from the **Timed Loop** template and explore the generated code
+
+## Summary
+
+In this lesson you:
+
+• Installed and activated LabVIEW Community Edition  
+• Launched LabVIEW and learned the Getting Started layout  
+• Verified the installation by creating a simple Add VI  
+
+Up next → **Lesson 2: Touring the LabVIEW IDE** – where you'll learn every pane, palette and shortcut that powers efficient G-coding.

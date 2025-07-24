@@ -1,0 +1,301 @@
+---
+id: m2-style-guide-basics-essentials
+title: LabVIEW Style Guide Essentials
+description: Learn fundamental LabVIEW programming style guidelines for creating professional, readable, and maintainable code.
+category: LabVIEW IDE Fluency
+difficulty: beginner
+estimatedTime: 12
+quiz:
+  - question: What is the recommended maximum wire bend count for clean block diagrams?
+    options:
+      - 2-3 bends per wire
+      - 4-5 bends per wire
+      - No limit on bends
+      - Straight wires only
+    answer: 2-3 bends per wire
+  - question: Which direction should data flow in a well-designed LabVIEW block diagram?
+    options:
+      - Bottom to top
+      - Right to left
+      - Left to right
+      - Top to bottom
+    answer: Left to right
+---
+
+# LabVIEW Style Guide Essentials
+
+Professional LabVIEW development requires following consistent coding standards. This lesson introduces the fundamental style guidelines that make your code readable, maintainable, and professional.
+
+## Why Style Matters
+
+Good programming style isn't just about aesthetics—it directly impacts:
+- **Code readability** for you and your teammates
+- **Debugging efficiency** when troubleshooting issues
+- **Maintenance costs** over the software lifecycle
+- **Professional reputation** and code quality
+
+> 💡 **Industry Insight**  
+> Companies with strict LabVIEW style guidelines report 40% fewer bugs and 30% faster development cycles.
+
+## Block Diagram Layout Principles
+
+### 1. Data Flow Direction
+
+LabVIEW follows a **left-to-right data flow** paradigm:
+
+```
+[Inputs] → [Processing] → [Outputs]
+```
+
+**Best Practice:**
+- Place inputs (controls) on the left side
+- Position processing functions in the center
+- Locate outputs (indicators) on the right side
+- Avoid backward-flowing wires when possible
+
+### 2. Wire Routing Guidelines
+
+Clean wiring makes block diagrams professional and readable:
+
+**Wire Bend Rules:**
+- Minimize wire bends (maximum 2-3 per connection)
+- Use 90-degree angles for bends
+- Avoid diagonal wires
+- Keep wires as short as practical
+
+**Wire Organization:**
+- Route wires above or below structures when possible
+- Use wire labels for long or complex connections
+- Group related wires together
+- Maintain consistent spacing between parallel wires
+
+### 3. Object Spacing and Alignment
+
+**Spacing Standards:**
+- Maintain consistent spacing between objects (typically 8-12 pixels)
+- Use LabVIEW's alignment grid (View → Alignment Grid)
+- Align objects both horizontally and vertically
+- Group related functionality visually
+
+**Alignment Tools:**
+- Use **Ctrl+Shift+Arrow** keys for precise alignment
+- Leverage the alignment grid for consistent positioning
+- Apply **Distribute Objects** for even spacing
+
+## Naming Conventions
+
+### Control and Indicator Names
+
+**Format:** Use descriptive, meaningful names
+- **Good:** `Temperature_Celsius`, `Motor_Speed_RPM`
+- **Bad:** `Numeric`, `Control_1`, `Temp`
+
+**Guidelines:**
+- Use underscores or camel case consistently
+- Include units when relevant
+- Avoid abbreviations unless industry-standard
+- Keep names under 20 characters when possible
+
+### VI and SubVI Names
+
+**File Naming:**
+- Use descriptive names that indicate functionality
+- **Good:** `Calculate_Statistics.vi`, `Read_Temperature_Sensor.vi`
+- **Bad:** `VI_1.vi`, `temp.vi`, `data.vi`
+
+**Icon Design:**
+- Create custom icons for all SubVIs
+- Use consistent color schemes within projects
+- Include abbreviated functionality description
+- Make icons visually distinguishable
+
+## Structure Organization
+
+### Loop Structure Guidelines
+
+**For Loops:**
+- Use when the number of iterations is known
+- Place iteration count control outside and to the left
+- Keep loop contents organized and minimal
+
+**While Loops:**
+- Include clear stop conditions
+- Place stop control prominently on front panel
+- Use meaningful loop condition logic
+
+### Case Structure Best Practices
+
+**Organization:**
+- Use descriptive case labels instead of numbers
+- Organize cases in logical order (alphabetical or by frequency)
+- Handle default cases explicitly
+- Minimize code duplication between cases
+
+**Wire Routing:**
+- Ensure all cases wire to output tunnels
+- Use consistent tunnel positioning across cases
+- Avoid unwired tunnels (use defaults when appropriate)
+
+## Front Panel Design Standards
+
+### Control Layout
+
+**Organization Principles:**
+- Group related controls logically
+- Use consistent control types throughout the application
+- Maintain visual hierarchy (most important controls prominent)
+- Provide clear labels and units
+
+**Visual Design:**
+- Use consistent fonts and colors
+- Maintain adequate spacing between controls
+- Align controls to a grid pattern
+- Use modern control styles for professional appearance
+
+### Indicator Placement
+
+**Best Practices:**
+- Position outputs to the right of inputs when possible
+- Use appropriate indicator types for data (charts for trends, gauges for current values)
+- Include clear labeling with units
+- Size indicators appropriately for the data range
+
+## Documentation Standards
+
+### Block Diagram Comments
+
+Use free labels to document:
+- Complex algorithms or calculations
+- Non-obvious design decisions
+- Reference information (equations, standards)
+- Troubleshooting notes
+
+**Comment Style:**
+- Use consistent font and color
+- Position comments near relevant code
+- Keep comments concise but informative
+- Update comments when code changes
+
+### VI Documentation
+
+**VI Properties Documentation:**
+- Fill in VI description with purpose and usage
+- Document input/output parameters
+- Note any special requirements or limitations
+- Include version history for significant changes
+
+## Error Handling Style
+
+### Error Wire Management
+
+**Consistent Routing:**
+- Route error wires along the bottom of block diagrams
+- Connect error chains through all SubVIs
+- Use error clusters for all file and hardware operations
+- Implement appropriate error handling at each level
+
+**Error Handling Patterns:**
+- Check for errors before proceeding with operations
+- Provide meaningful error messages to users
+- Log errors appropriately for debugging
+- Use Simple Error Handler for basic error display
+
+> ⚠️ **Common Mistake**  
+> Don't ignore error wires! Unhandled errors lead to unpredictable behavior and difficult debugging sessions.
+
+## Performance Considerations
+
+### Efficient Coding Practices
+
+**Memory Management:**
+- Initialize arrays and strings to appropriate sizes
+- Avoid unnecessary array copies
+- Use in-place element structures when appropriate
+- Clear large data structures when no longer needed
+
+**Execution Efficiency:**
+- Minimize operations inside loops
+- Use appropriate data types (avoid conversions)
+- Implement proper timing in loops
+- Consider parallel processing for independent operations
+
+## Code Review Checklist
+
+Before finalizing your VIs, verify:
+
+### Block Diagram Review
+- [ ] Data flows left to right consistently
+- [ ] Wire bends are minimized and clean
+- [ ] Objects are properly aligned and spaced
+- [ ] All structures are properly organized
+- [ ] Error handling is implemented throughout
+
+### Front Panel Review
+- [ ] Controls and indicators are logically organized
+- [ ] Labels are descriptive and include units
+- [ ] Visual design is consistent and professional
+- [ ] User interface is intuitive and clear
+
+### Documentation Review
+- [ ] VI descriptions are complete and accurate
+- [ ] Complex code sections are commented
+- [ ] Connector panes are properly configured
+- [ ] Icons are custom and descriptive
+
+## Advanced Style Techniques
+
+### Using SubVIs for Modularity
+
+**When to Create SubVIs:**
+- Code blocks used in multiple locations
+- Complex algorithms that obscure main logic
+- Functions that can be tested independently
+- When block diagrams become too large (>1 screen)
+
+**SubVI Design:**
+- Create clear, descriptive connector panes
+- Design intuitive input/output patterns
+- Include comprehensive error handling
+- Document SubVI functionality thoroughly
+
+### Template and Standards Files
+
+**Project Templates:**
+- Create standardized VI templates with common elements
+- Establish consistent front panel layouts
+- Pre-configure error handling patterns
+- Include standard documentation fields
+
+## Summary
+
+Professional LabVIEW style involves:
+
+• **Clean block diagram layout** with left-to-right data flow and minimal wire bends
+• **Consistent naming conventions** for all objects and files
+• **Logical organization** of structures and front panel elements
+• **Comprehensive documentation** and commenting practices
+• **Proper error handling** throughout all code paths
+• **Modular design** using well-designed SubVIs
+
+Following these style guidelines from the beginning will make you a more efficient LabVIEW programmer and create code that others can easily understand and maintain.
+
+---
+
+## Practice Exercises
+
+1. **Style Analysis**: Open an existing VI and identify 5 style improvements that could be made.
+
+2. **Wire Cleanup**: Create a block diagram with intentionally messy wiring, then clean it up following the guidelines.
+
+3. **Naming Convention**: Rename all controls and indicators in a VI to follow proper naming conventions.
+
+4. **Documentation Practice**: Add appropriate comments and VI documentation to an undocumented VI.
+
+---
+
+## Key Takeaways
+
+- Good style is an investment in code maintainability and team productivity
+- Consistent application of style guidelines creates professional-looking code
+- Clean block diagrams are easier to debug and modify
+- Proper documentation saves time during maintenance and code reviews
