@@ -379,16 +379,13 @@ export default function App() {
        );
     }
 
-    let content;
     switch (currentView) {
       case 'home':
-        content = <HomeComponent onStart={() => changeView('browser')} />;
-        break;
+        return <HomeComponent onStart={() => changeView('browser')} />;
       case 'about':
-        content = <About />;
-        break;
+        return <About />;
       case 'lesson':
-        content = currentLesson ? (
+        return currentLesson ? (
           <LessonViewer 
             lesson={currentLesson}
             onComplete={(result) => handleLessonComplete(currentLesson.id, result)}
@@ -397,32 +394,25 @@ export default function App() {
             canNavigate={getNavigationState()}
           />
         ) : <div className="text-center py-12"><p>No lesson selected.</p></div>;
-        break;
       case 'browser':
-        content = <LessonBrowser lessons={lessons} onLessonSelect={handleLessonSelect} userProgress={userProgress} />;
-        break;
+        return <LessonBrowser lessons={lessons} onLessonSelect={handleLessonSelect} userProgress={userProgress} />;
       case 'examples':
-        content = <ExamplesBrowser examples={examples} />;
-        break;
+        return <ExamplesBrowser examples={examples} />;
       case 'quizzes':
-        content = <QuizzesBrowser quizzes={quizzes} onStartQuiz={handleStartStandaloneQuiz} />;
-        break;
+        return <QuizzesBrowser quizzes={quizzes} onStartQuiz={handleStartStandaloneQuiz} />;
       case 'standaloneQuiz':
-        content = currentQuiz ? (
+        return currentQuiz ? (
             <StandaloneQuizViewer 
                 quiz={currentQuiz}
                 onComplete={(result) => handleStandaloneQuizComplete(currentQuiz.id, result)}
                 onBack={() => changeView('quizzes')}
             />
         ) : <div className="text-center py-12"><p>No quiz selected.</p></div>;
-        break;
       case 'progress':
-        content = <ProgressDashboard userProgress={userProgress} lessons={lessons} achievements={achievements} onReviewLesson={handleLessonSelect}/>;
-        break;
+        return <ProgressDashboard userProgress={userProgress} lessons={lessons} achievements={achievements} onReviewLesson={handleLessonSelect}/>;
       default:
-        content = <div className="text-center py-12"><p>This section is under construction.</p></div>;
+        return <div className="text-center py-12"><p>This section is under construction.</p></div>;
     }
-    return <div className="flex-1">{content}</div>;
   }
 
   const handleBreadcrumbClick = () => {
@@ -484,7 +474,7 @@ export default function App() {
 
       {sidebarOpen && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      <div className="flex-1 flex flex-col md:ml-0 min-h-screen">
+      <div className="flex-1 flex flex-col md:ml-0">
         <header className="bg-background-header border-b border-border sticky top-0 z-20">
           <div className="flex items-center justify-between px-6 h-16">
             <div className="flex items-center gap-4">
@@ -521,7 +511,7 @@ export default function App() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-background flex flex-col">
+        <main className="flex-1 overflow-y-auto bg-background flex-grow">
           {renderContent()}
         </main>
       </div>
