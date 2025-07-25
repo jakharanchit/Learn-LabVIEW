@@ -474,7 +474,7 @@ export default function App() {
 
       {sidebarOpen && <div className="fixed inset-0 bg-black/60 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      <div className="flex-1 flex flex-col md:ml-0">
+      <div className="flex-1 flex flex-col md:ml-0 h-screen">
         <header className="bg-background-header border-b border-border sticky top-0 z-20">
           <div className="flex items-center justify-between px-6 h-16">
             <div className="flex items-center gap-4">
@@ -511,7 +511,7 @@ export default function App() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-background">
+        <main className="flex-1 overflow-y-auto bg-background flex flex-col">
           {renderContent()}
         </main>
       </div>
