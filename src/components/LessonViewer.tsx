@@ -17,8 +17,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({ lesson, onComplete, 
     const LessonContentComponent = lesson.content;
     
     return (
-        <div className="max-w-4xl mx-auto p-6 md:p-8 space-y-8 animate-fade-in h-full flex flex-col">
-            <div className="flex-grow">
+        <div className="max-w-4xl mx-auto p-6 md:p-8 space-y-8 animate-fade-in">
             {isCompleted && (
                 <div className="flex items-center gap-2 text-text-success font-medium mb-2">
                     <CheckCircle2 className="h-5 w-5" />
@@ -49,7 +48,6 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({ lesson, onComplete, 
                     )}
                 </Card.Content>
             </Card>
-            </div>
 
              <div className="flex justify-between items-center mt-8">
                 <Button onClick={() => onNavigate('prev')} disabled={!canNavigate.prev} variant="outline">
